@@ -1,0 +1,177 @@
+@model sistema.Models.ViewPrescriptionModel;
+@using System.Globalization;
+@{
+    Layout = null;
+    CultureInfo culture = new CultureInfo("es-GT");
+ }
+<!DOCTYPE html>
+<style>
+    .header-add {
+        text-align: right;
+        font-size: 18px;
+    }
+    .header {
+        text-align: center;
+    }
+    .subtitle {
+        text-align: center;
+        font-size: 20px;
+    }
+    .infopres {
+        font-size: 16px;
+    }
+@*     .text-right {
+        text-align: right !important;
+    }
+
+    .socialn {
+        margin-top: 15px;
+    }
+
+    * {
+        font-family: 'Zen Kaku Gothic New', sans-serif;
+        color: black;
+    }
+
+    .title {}
+
+    .subtitle {
+        text-align: center;
+        font-size: 5px;
+    }
+
+    
+
+    .header-add {
+        text-align: right;
+        font-size: 5px;
+    }
+
+    .water {
+        opacity: 0.1;
+        position: relative;
+    }
+
+    .text-underline {
+        text-decoration: underline !important;
+        color: #000 !important;
+    }
+
+    .es-with {
+        width: 50px;
+    }
+
+    .prescriptions {
+        margin-top: 50px;
+    }
+
+    .infopres {
+        font-size: 10px;
+        width: 100px;
+    }
+
+    .item {
+        font-size: 12px;
+    }
+    .nextdate{
+        font-size: 10px;
+        text-align: right;
+    } *@
+</style>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/main.css" rel="stylesheet">
+    <link href="~/css/select2.min.css" rel="stylesheet">
+    <link href="~/css/select2-bootstrap4.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
+    <title>Prescripcion</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="prescriptions">
+            <div class="row">
+                <div class="col-12">
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h3 class="header"> MEDIDENT</h3>
+                                    <p class="subtitle"> Clínica dental </p>
+                                </td>
+                                <td class="es-with"></td>
+                                <td class="es-with"></td>
+                                <td class="es-with">
+                                    <p class="header-add"> 2da Avenida 4-22 "A" Zona 1<br/>
+                                        San Lucas Sacatepéquez, Sacatepéquez <br/>
+                                        Cel.: 5120-7679</p>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="infopres"><b>
+                                        Guatemala,&nbsp <span class="text-underline"> @DateTime.Today.ToString("dd", culture)</span>
+                                        de <span class="text-underline"> @DateTime.Today.ToString("MMMM", culture)</span>
+                                        del <span class="text-underline"> @DateTime.Today.ToString("yyyy", culture)</span></b>
+                                    </p>
+                                    <p class="infopres">
+                                        <b>Nombre:</b> &nbsp&nbsp <span class="text-underline"> @Model.Nombre</span>
+                                    </p>
+                                    <p class="infopres"><b>Edad:</b> <span class="text-underline"> @Model.Edad</span></p>
+                                </td>                      
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="prescriptions">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <th class="item">Item</th>
+                            <th class="item">Medicamento</th>
+                            <th class="item">Cantidad</th>
+                            <th class="item">Indicaciones</th>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Prescriptions)
+                            {
+                                <tr>
+                                    <td class="item">@item.Item</td>
+                                    <td class="item">@item.Medicine</td>
+                                    <td class="item">@item.Qty</td>
+                                    <td class="item">@item.Indications</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div>
+            <p class="nextdate">
+                
+            </p>
+        </div>
+    </footer>
+    <script type="text/javascript" src="~/js/jquery.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="~/assets/scripts/main.js"></script>
+</body>
+
+</html>

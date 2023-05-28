@@ -1,0 +1,495 @@
+@{   
+    Layout = "_HojaLayout";
+    @* DateTime fecha = DateTime.Now; *@    
+
+    var todayDate = DateTime.Now;
+    var edad = 0; 
+    edad = todayDate.Year - Model.Paciente.FechaNacimiento.Value.Year;
+    if (todayDate.Month < Model.Paciente.FechaNacimiento.Value.Month || (todayDate.Month == Model.Paciente.FechaNacimiento.Value.Month && todayDate.Day < Model.Paciente.FechaNacimiento.Value.Day)) edad--; 
+}
+
+
+@model sistema.Models.CarneVacunacionJovenViewModel
+
+<div style="background: #3AAADE; height: 450px;">
+    <br><br>
+    <h1 class="text-center font-weight-bold" style="color: rgb(236, 236, 236);font-size: 60px; text-shadow: -10px 0px 0px #1e88b9;">CONTROL DE VACUNAS</h1>
+    <br>
+    <div style="display: inline-flex;">
+        <div class="text-center" style="width: 25%; height: 200px; float: left; margin: 5px;"><br><br>
+            <label>CONTÁCTANOS</label><br>
+            <label>6629-6418 / 4740-7444</label><hr>
+            <label>1 Avenida 3-37 Zona 2 San Pedro Sacatepéquez, San Pedro Sacatepéquez, Guatemala</label>
+        </div>
+        <div style="width: 35%; height: 300px; float: left; margin: 5px;">
+            <label>NOMBRE DEL PACIENTE:</label><br>
+            @Html.TextBox("Nombre", @Model.Paciente.Nombre, new { @class = "form-control" })<br>
+            <label>FECHA DE NACIMIENTO:</label><br>
+            @Html.TextBox("Fecha", @Model.Paciente.FechaNacimiento.Value.ToString("dd/MM/yyyy"), new { @class = "form-control" })<br>
+            <label>NÚMERO TELEFONICO:</label><br>
+            @Html.TextBox("Telefono", @Model.Paciente.Celular, new { @class = "form-control" })<br>
+        </div>
+        <div style= "width: 35%; height: 300px; float: left; margin: 5px;">
+            <label>EDAD</label><br>
+            @Html.TextBox("Edad", @edad, new { @class = "form-control" })<br>
+            <label>OBSERVACIONES</label><br>
+            @Html.TextArea("Observacion", "", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+<br><br>
+
+@* Tabla de vacunas *@
+<div class="row">
+    <div class="col">
+        <table class="table table-md table-bordered border-success" style="color: #1e88b9">
+            <thead>
+                <tr>
+                    <th class="col-sm-1">Vacunas</th>
+                    <th class="col-sm-1">1ra</th>
+                    <th class="col-sm-1">2da</th>
+                    <th class="col-sm-1">3ra</th>
+                    <th class="col-md-1">1er Refuerzo</th>
+                    <th class="col-md-1">2do Refuerzo</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tbody>
+                @for (var i = 0; i < Model.VacunasPaciente.Count ; i++)
+                {
+                    <tr>
+                        <td rowspan="2">@Model.VacunasPaciente[i].Vacuna.Nombre</td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].Primera){
+                                <span>Sí</span>
+                            }else{
+                                <span>No</span>
+                            }
+                        </td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].Segunda){
+                            <span>Sí</span>
+                            }else{
+                                <span>No</span>
+                            }
+                        </td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].Tercera){
+                                <span>Sí</span>
+                            }else{
+                                <span>No</span>
+                            }
+                        </td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].PrimerRefuerzo){
+                                <span>Sí</span>
+                            }else{
+                                <span>No</span>
+                            }
+                        </td>
+                        <td colspan="2">
+                            @if(Model.VacunasPaciente[i].SegundoRefuerzo){
+                                <span>Sí</span>
+                            }else{
+                                <span>No</span>
+                            }
+                        </td>
+                    </tr>
+                    @* segunda fila con las fechas *@
+                    <tr>
+                        <td>
+                            @if(Model.VacunasPaciente[i].FechaPrimera != null){
+                               @Model.VacunasPaciente[i].FechaPrimera.Value.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].FechaSegunda != null){
+                               @Model.VacunasPaciente[i].FechaSegunda.Value.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].FechaTercera != null){
+                               @Model.VacunasPaciente[i].FechaTercera.Value.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td>
+                            @if(Model.VacunasPaciente[i].FechaPrimerRefuerzo != null){
+                               @Model.VacunasPaciente[i].FechaPrimerRefuerzo.Value.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                        <td colspan="2">
+                            @if(Model.VacunasPaciente[i].FechaSegundoRefuerzo != null){
+                               @Model.VacunasPaciente[i].FechaSegundoRefuerzo.Value.ToString("dd/MM/yyyy")
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 
+
+    
+
+
+@* Nombre: @Model.Paciente.Nombre *@
+          @*      <img width="40"  src="/assets/images/farmamestlogo.png" alt="">
+                       <div class="text-right" style="font-size: 12px;">
+                            <label class=""><strong>Fecha y Hora de Emision: </strong>@fecha</label> &nbsp; &nbsp;
+                            <br/>   
+                        </div>
+             
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Ruta #</th>
+                            <th>Nombre Piloto</th>
+                            <th>Fecha y Hora de entrega</th>
+                            <th>Direccion Exacta</th>
+                            <th>Estado</th>
+                           
+
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model)
+                            {
+                        <tr>
+                            <td>@item.RutaId</td>
+                            <td>@item.NombrePiloto</td>
+                            <td>@item.FechaEntrega</td>
+                            <td>@item.DireccionExacta</td>
+                            <td>@item.EstadosEnvio.Estado</td>
+                           
+                        </tr>
+                            }
+                        </tbody>
+                    </table> *@
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       @* @model sistema.Models.ExpedienteViewModel;
+
+@{
+    Layout = "_HojaLayout";
+    decimal MontoPagadoClinica = 0.00m;
+    decimal MontoPagadoFarmacia = 0.00m;
+    int totalventasc = 0;
+    int totalventasf = 0;
+    IEnumerable<IEnumerable<IGrouping<int, Database.Shared.Models.DetalleVenta>>> servicios = null;
+    IEnumerable<IEnumerable<IGrouping<int, Database.Shared.Models.DetalleVenta>>> medicamentos = null;
+    if (Model.Paciente.Venta.Count() > 0)
+    {
+        servicios = Model.Paciente.Venta.Select(x => x.DetalleVenta.Where(x => x.BienOServicio == "S").GroupBy(x => x.VentaId));
+        medicamentos = Model.Paciente.Venta.Select(x => x.DetalleVenta.Where(x => x.BienOServicio == "B").GroupBy(x => x.VentaId));
+    }
+}
+
+<div>
+    <div class="text-center" style="border: 1px black solid;">
+        <h4> EXPEDIENTE PACIENTE</h4>
+        <h6>PROFAM</h6>
+    </div>
+</div>
+<br>
+<div>
+    <span class="font-weight-bold">FECHA Y HORA DE EMISIÓN </span>
+    <span> @DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")</span>
+</div>
+<div>
+    <span class="font-weight-bold">Nombre: </span>
+    <span>@Model.Paciente.Nombre</span>
+</div>
+<div>
+    <span class="font-weight-bold">Sexo: </span>
+    <span>@Model.Paciente.sexoText</span>
+</div>
+<div>
+    <span class="font-weight-bold">Teléfono: </span>
+    <span>@Model.Paciente.Telefono</span>
+</div>
+<div>
+    <span class="font-weight-bold">Edad: </span>
+    <span>@Model.Paciente.Edad</span>
+</div>
+<br>
+<div>
+    <div class="text-center" style="border: 1px black solid;">
+        <h4>EXAMENES FÍSICOS</h4>
+    </div>
+</div>
+<font size="2" aling="center">
+
+    @if (Model.ExamenesFisicos != null)
+    {
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th><span contenteditable>Fecha</span></th>
+                    <th><span contenteditable>Temperatura</span></th>
+                    <th><span contenteditable>Frecuencia respiratoria</span></th>
+                    <th><span contenteditable>Frecuencia cardíaca</span></th>
+                    <th><span contenteditable>Saturación de oxígeno</span></th>
+                    <th><span contenteditable>Presión arterial</span></th>
+                    <th><span contenteditable>Peso</span></th>
+                    <th><span contenteditable>Talla</span></th>
+                    <th><span contenteditable>GMT</span></th>
+                    <th><span contenteditable>Observaciones</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ExamenesFisicos)
+                {
+                    <tr>
+                        <td>@item.Fecha.ToString("dd/MM/yyyy hh:mm tt")</td>
+                        <td>@item.Temperatura</td>
+                        <td>@item.FrecuenciaRespiratoria</td>
+                        <td>@item.FrecuenciaCardiaca</td>
+                        <td>@item.SaturacionOxigeno</td>
+                        <td>@item.PresionArterial</td>
+                        <td>@item.Peso</td>
+                        <td>@item.Talla</td>
+                        <td>@item.GMT</td>
+                        <td>@item.Observaciones</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</font>
+<br />
+<div>
+    <div class="text-center" style="border: 1px black solid;">
+        <h4>CITAS REALIZADAS</h4>
+    </div>
+</div>
+<font size="2" aling="center">
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th><span contenteditable>Fecha</span></th>
+                <th><span contenteditable>Estado</span></th>
+                <th><span contenteditable>Costo Consulta</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cita in Model.CitasExpediente)
+            {
+                <tr>
+                    <td><span>@cita.Fecha.ToString("dd/MM/yyyy hh:mm tt")</span></td>
+                    <td>@cita.Estado</td>
+                    <td>@cita.CostoConsulta.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</font>
+<br />
+<div>
+    <div class="text-center" style="border: 1px black solid;">
+        <h4> CONSULTAS </h4>
+    </div>
+</div>
+<font size="2" aling="center">
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th><span contenteditable>Fecha</span></th>
+                <th><span contenteditable>Motivo</span></th>
+                <th><span contenteditable>Especialidad</span></th>
+                <th><span contenteditable>Asignado a</span></th>
+                <th><span contenteditable>Servicio</span></th>
+                <th><span contenteditable>Precio</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var consulta in Model.ConsultasExpediente)
+            {
+                <tr>
+                    <td>@consulta.Fecha.ToString("dd/MM/yyyy hh:mm tt")</td>
+                    <td>@consulta.Motivo</td>
+                    <td>@consulta.Especialidad</td>
+                    <td>@consulta.AsignadoA</td>
+                    <td>@consulta.Servicio</td>
+                    <td>@consulta.Precio</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</font>
+<br />
+<div>
+    <div class="text-center" style="border: 1px black solid;">
+        <h4> VENTAS PACIENTE</h4>
+    </div>
+</div>
+<br />
+<div>
+    <div class="text-center">
+        <h5> SERVICIOS </h5>
+    </div>
+</div>
+<font size="2" aling="center">
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th><span contenteditable>Fecha</span></th>
+                <th><span contenteditable>#</span></th>
+                <th><span contenteditable>Vendedor</span></th>
+                <th><span contenteditable>Nombre</span></th>
+                <th><span contenteditable>Nit</span></th>
+                <th><span contenteditable>Forma Pago</span></th>
+                <th><span contenteditable>Total</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            @if (servicios != null)
+            {
+                @foreach (var item in servicios)
+                {
+                    var venta = item.FirstOrDefault().FirstOrDefault().Venta;
+                    var suma = item.Sum(a => a.Sum(x => x.Subtotal));
+                    MontoPagadoClinica += suma;
+                    <tr>
+                        <td>@venta.FechaVenta.ToString("dd/MM/yyyy hh:mm tt")</td>
+                        <td>@venta.Id</td>
+                        <td>@venta.Empleado.Nombre</td>
+                        <td>@venta.Nombres</td>
+                        <td>@venta.Nit</td>
+                        <td>
+                            @if (venta.Pagos.Count() > 0)
+                            {
+                                foreach (var pago in venta.Pagos)
+                                {
+                                    <span>@pago.FormaPago.NombreFormaPago</span>
+                                }
+                            }
+                        </td>
+                        <td>Q @suma</td>
+                    </tr>
+                    totalventasc++;
+                }
+
+            }
+        </tbody>
+    </table>
+</font>
+<hr>
+<div>
+    <span class="font-weight-bold">Monto Total Servicios: </span>
+    <span> Q @MontoPagadoClinica</span>
+</div>
+<div>
+    <span class="font-weight-bold">Total Ventas con Servicios: </span>
+    <span> @totalventasc</span>
+</div>
+<br>
+<br>
+<div>
+    <div class="text-center">
+        <h5> MEDICAMENTOS </h5>
+    </div>
+</div>
+<font size="2" aling="center">
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th><span contenteditable>Fecha</span></th>
+                <th><span contenteditable>#</span></th>
+                <th><span contenteditable>Vendedor</span></th>
+                <th><span contenteditable>Nombre</span></th>
+                <th><span contenteditable>Nit</span></th>
+                <th><span contenteditable>Forma Pago</span></th>
+                <th><span contenteditable>Total</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            @if (medicamentos != null)
+            {
+                @foreach (var item in medicamentos)
+                {
+                    var venta = item.FirstOrDefault().FirstOrDefault().Venta;
+                    var suma = item.Sum(a => a.Sum(x => x.Subtotal));
+                    MontoPagadoFarmacia += suma;
+                    <tr>
+                        <td>@venta.FechaVenta.ToString("dd/MM/yyyy hh:mm tt")</td>
+                        <td>@venta.Id</td>
+                        <td>@venta.Empleado.Nombre</td>
+                        <td>@venta.Nombres</td>
+                        <td>@venta.Nit</td>
+                        <td>
+                            @if (venta.Pagos.Count() > 0)
+                            {
+                                foreach (var pago in venta.Pagos)
+                                {
+                                    <span>@pago.FormaPago.NombreFormaPago</span>
+                                }
+                            }
+                        </td>
+                        <td>Q @suma</td>
+                    </tr>
+                    totalventasf++;
+                }
+
+            }
+        </tbody>
+    </table>
+</font>
+<hr>
+<div>
+    <span class="font-weight-bold">Monto Total Medicamentos: </span>
+    <span> Q @MontoPagadoFarmacia</span>
+</div>
+<div>
+    <span class="font-weight-bold">Total Ventas con Medicamentos: </span>
+    <span> @totalventasf</span>
+</div>
+<hr>
+<br />
+<div>
+    <span class="font-weight-bold">Monto Total Ventas Paciente: </span>
+    <span> Q @(MontoPagadoFarmacia + MontoPagadoClinica)</span>
+</div>
+<div>
+    <span class="font-weight-bold">Total Ventas: </span>
+    <span> @Model.Paciente.Venta.Count() </span>
+</div> *@

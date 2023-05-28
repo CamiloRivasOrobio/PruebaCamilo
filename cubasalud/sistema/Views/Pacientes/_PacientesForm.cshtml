@@ -1,0 +1,1603 @@
+@model sistema.Models.PacientesBaseViewModel
+@Html.HiddenFor(a => a.PacienteId)
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="btn-actions-pane-right">
+            <div class="nav">
+                <a data-toggle="tab" href="#tab-eg2-0"
+                   class="btn-pill btn-wide mr-1 ml-1 active btn btn-outline-alternate btn-sm">Datos personales</a>
+                <a data-toggle="tab" href="#tab-eg2-1"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Antecedentes</a>
+                <a data-toggle="tab" href="#tab-eg2-2"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Médico</a>
+                <a data-toggle="tab" href="#tab-eg2-3"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Historia médica</a>
+                <a data-toggle="tab" href="#tab-eg2-4"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Pediátricos</a>
+                <a data-toggle="tab" href="#tab-eg2-5"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Ginecológicos</a>
+                <a data-toggle="tab" href="#tab-eg2-6"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Neurológicos</a>
+                <a data-toggle="tab" href="#tab-eg2-7"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Políticas de pago</a>
+                <a data-toggle="tab" href="#tab-eg2-8"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Declaración de consentimiento</a>
+                <a data-toggle="tab" href="#tab-eg2-9"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Datos de pago</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-eg2-0" role="tabpanel">
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Datos personales</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Fecha de registro</label>
+                                    @Html.TextBoxFor(a => a.FechaRegistro, "{0:yyyy-MM-dd}", new
+                                    {
+                                    @class = "form-control",
+                                    @type = "date"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.FechaRegistro, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Nombre completo del paciente</label>
+                                    @Html.TextBoxFor(a => a.Nombre, new { @class = "form-control", @placeholder = "Nombre Paciente" })
+                                    @Html.ValidationMessageFor(a => a.Nombre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Alias del paciente</label>
+                                    @Html.TextBoxFor(a => a.Alias, new { @class = "form-control", @placeholder = "Alias del paciente" })
+                                    @Html.ValidationMessageFor(a => a.Alias, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Sexo</label>
+                                    <select class="form-control select2bs4" style="width: 100%;" asp-for="@Model.SexoId"
+                                            asp-items="@Model.SexoSelectListItems">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Fecha de nacimiento</label>
+                                    @Html.TextBoxFor(a => a.FechaNacimiento, "{0:yyyy-MM-dd}", new
+                                    {
+                                    @class = "form-control",
+                                    @type = "date",
+                                    @onchange = "getEdad()",
+                                    @onkeyup = "getEdad()"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.FechaNacimiento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Edad</label>
+                                    @Html.TextBoxFor(a => a.Edad, new { @class = "form-control", @type = "text", @readonly = "true" })
+                                    @Html.ValidationMessageFor(a => a.Edad, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Tipo de sangre</label>
+                                    @Html.TextBoxFor(a => a.TipoDeSangre, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Tipo de sangre"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.TipoDeSangre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail11" class="">Teléfono</label>
+                                    @* <input placeholder="Precio" class="form-control"> *@
+                                    @Html.TextBoxFor(a => a.Telefono, new
+                                    {
+                                    type = "number",
+                                    @class = "form-control",
+                                    @placeholder = "Telefono"
+                                    })
+                                    @* @Html.EditorFor(a => a.Producto.Precio, new { htmlAttributes = new { @type = "number",
+                                        @class="form-control", @placeholder="Precio"}}) *@
+                                    @Html.ValidationMessageFor(a => a.Telefono, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail11" class="">Celular</label>
+                                    @* <input placeholder="Precio" class="form-control"> *@
+                                    @Html.TextBoxFor(a => a.Celular, new
+                                    {
+                                    type = "number",
+                                    @class = "form-control",
+                                    @placeholder = "Celular"
+                                    })
+                                    @* @Html.EditorFor(a => a.Producto.Precio, new { htmlAttributes = new { @type = "number",
+                                        @class="form-control", @placeholder="Precio"}}) *@
+                                    @Html.ValidationMessageFor(a => a.Celular, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail11" class="">Email</label>
+                                    @* <input placeholder="Precio" class="form-control"> *@
+                                    @Html.TextBoxFor(a => a.Email, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Email"
+                                    })
+                                    @* @Html.EditorFor(a => a.Producto.Precio, new { htmlAttributes = new { @type = "number",
+                                        @class="form-control", @placeholder="Precio"}}) *@
+                                    @Html.ValidationMessageFor(a => a.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail11" class="">Contraseña</label>
+                                    @Html.TextBoxFor(a => a.Contrasennia, new
+                                    {
+                                    @type="password",
+                                    @class = "form-control",
+                                    @placeholder = "Contraseña"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.Contrasennia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">NIT</label>
+                                    @* <input placeholder="Descripción Producto" class="form-control"> *@
+                                    @Html.TextBoxFor(a => a.Nit, new
+                                    {
+                                    type = "number",
+                                    @class = "form-control",
+                                    @placeholder = "NIT",
+                                    @required = "required",
+                                    })
+                                    @Html.ValidationMessageFor(a => a.Nit, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail11" class="">DPI</label>
+                                    @* <input placeholder="Precio" class="form-control"> *@
+                                    @Html.TextBoxFor(a => a.Dpi, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "DPI"
+                                    })
+                                    @* @Html.EditorFor(a => a.Producto.Precio, new { htmlAttributes = new { @type = "number",
+                                        @class="form-control", @placeholder="Precio"}}) *@
+                                    @Html.ValidationMessageFor(a => a.Dpi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Dirección</label>
+                                    @Html.TextBoxFor(a => a.Direccion, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Direccion"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.Direccion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Número de afiliación</label>
+                                    @Html.TextBoxFor(a => a.no_IGGS, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Número de Afiliación"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.no_IGGS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">¿Está afiliado?</label>
+                                    <select asp-for="esta_Afiliado" class="form-control">
+                                        <option value="false">No</option>
+                                        <option value="true">Sí</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Seguro EPSS</label>
+                                    <select class="form-control select2bs4" style="width: 100%;" asp-for="@Model.SeguroEpssId"
+                                            asp-items="@Model.SeguroEpssSelectListItems">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label>Código EPSS</label>
+                                    @Html.TextBoxFor(a => a.CodigoEPS, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Codigo EPSS"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.CodigoEPS, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Religion</label>
+                                    @Html.TextBoxFor(a => a.Religion, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Religion"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.Religion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Ocupacion</label>
+                                    @Html.TextBoxFor(a => a.Ocupacion, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Ocupacion"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.Ocupacion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Estado Civil</label>
+                                    @Html.TextBoxFor(a => a.EstadoCivil, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Estado Civil"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.EstadoCivil, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Contacto Emergencia</label>
+                                    @Html.TextBoxFor(a => a.ContactoEmergencia, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Contacto Emergencia"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.ContactoEmergencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Número Contacto Emergencia</label>
+                                    @Html.TextBoxFor(a => a.NumeroContactoEmergencia, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Numero Contacto Emergencia"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.NumeroContactoEmergencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Nombre del contacto de emergencia</label>
+                                    @Html.TextBoxFor(a => a.NombreContactoEmergencia, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Nombre Contacto Emergencia"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.NombreContactoEmergencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Nacionalidad</label>
+                                    @Html.TextBoxFor(a => a.Nacionalidad, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Nacionalidad"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.Nacionalidad, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">País de residencia</label>
+                                    @Html.TextBoxFor(a => a.PaisResidencia, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "País de residencia"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.PaisResidencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Departamento de residencia</label>
+                                    @Html.TextBoxFor(a => a.DepartamentoResidencia, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Departamento de residencia"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.DepartamentoResidencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label class="">Municipio de residencia</label>
+                                    @Html.TextBoxFor(a => a.MunicipioResidencia, new
+                                    {
+                                    @class = "form-control",
+                                    @placeholder = "Municipio de residencia"
+                                    })
+                                    @Html.ValidationMessageFor(a => a.MunicipioResidencia, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Tipo de paciente</label>
+                                <select class="form-control" asp-for="@Model.TipoPacienteId"
+                                        asp-items="@Model.TipoPacienteSelectListItems">
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Modalidad de atención</label><br />
+                                <select class="form-control select2bs4" style="width: 100%;" asp-for="@Model.ModalidadAtencion"
+                                        asp-items="@Model.ModalidadAtencionSelectListItems">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Beneficiarios EPSS</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label class="">Tipo</label>
+                                    <select data-bind="value: tipoNuevoBeneficiario" class="form-control">
+                                        <option id="Titular">Titular</option>
+                                        <option id="Beneficiario">Beneficiario</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label class="">Nit</label>
+                                    <input data-bind="value: nitNuevoBeneficiario" class="form-control" placeholder="Nit" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label class="">Nombre</label>
+                                    <input data-bind="value: nombreNuevoBeneficiario" class="form-control" placeholder="Nombre" />
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="text-align: center; margin: auto;">
+                                <button class="btn btn-primary" style="color:white" data-bind="click: agregarBeneficiarioEpss">
+                                    <i class="fas fa-add"></i> Agregar
+                                </button>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tipo</th>
+                                                <th>Nit</th>
+                                                <th>Nombres</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko foreach: beneficiariosEpss-->
+                                            <tr>
+                                                <td data-bind="text: Tipo"></td>
+                                                <td data-bind="text: Nit"></td>
+                                                <td data-bind="text: Name"></td>
+                                                <td><button class="btn btn-danger" data-bind="click:$root.quitarBeneficiarioEpss">Quitar</button></td>
+                                            </tr>
+                                            <!--/ko-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Datos de IGSS</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tipo de afiliación</label>
+                                <select class="form-control" id="IgssTipoAfiliacion">
+                                    <option value="Jubilado">Jubilado</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Dependiente">Dependiente</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Número de afiliación</label>
+                                @Html.TextBoxFor(p=>p.IgssNumeroAfiliacion, new {@class="form-control", @placeholder="Número de afiliación"})
+                            </div>
+                            <div class="col-md-3">
+                                <label>Cantidad de dependientes</label>
+                                @Html.TextBoxFor(p=>p.IgssCantidadDependientes, new {@class="form-control", @type="number"})
+                            </div>
+                            <div class="col-md-3">
+                                <label>Parentesco de dependientes</label>
+                                @Html.TextBoxFor(p=>p.IgssParentescoDependientes, new {@class="form-control", @placeholder="Parentesco de dependientes"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Información de nacimiento</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-3">
+                                <label>PAN (Peso al nacer)</label>
+                                @Html.TextBoxFor(a => a.PesoAlNacer, new { @class = "form-control", @placeholder = "Peso al nacer" })
+                                @Html.ValidationMessageFor(a => a.PesoAlNacer, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3">
+                                <label>Talla (estatura del niño)</label>
+                                @Html.TextBoxFor(a => a.Talla, new { @class = "form-control", @placeholder = "Talla" })
+                                @Html.ValidationMessageFor(a => a.Talla, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3">
+                                <label>Circunferencia cefálica (CC)</label>
+                                @Html.TextBoxFor(a => a.CircunferenciaCefalica, new { @class = "form-control", @placeholder = "Circunferencia cefálica" })
+                                @Html.ValidationMessageFor(a => a.CircunferenciaCefalica, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tipo de parto</label>
+                                <select class="form-control" asp-for="TipoParto">
+                                    <option value="normal">Normal</option>
+                                    <option value="cesarea">Cesarea</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Fotografía del paciente</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                Adjunte una fotografía del paciente al inicio del tratamiento<br>
+                                <input type="file" class="form-control" id="fotografia-paciente" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Archivos</b></h5>
+                                <button class="btn btn-primary" data-bind="click:agregarArchivo">Agregar</button>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre de archivo</th>
+                                            <th>Subir archivo</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: archivos-->
+                                        <tr>
+                                            <td><input class="form-control" data-bind="value:Nombre" placeholder="Nombre" /></td>
+                                            <td><input class="form-control" type="file" data-bind="attr:{id:IdInputFile}" /></td>
+                                            <td><button class="btn btn-danger" data-bind="click:$root.quitarArchivo">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card col-md-12">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Firma</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <canvas id="firma-registro" style="width: 900px;height: 300px;background-color: #ffffff;border: 1px solid black;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-1" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Antecedentes familiares</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-antecedentes-familiares">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Antecedente</th>
+                                                <th class="text-center">Madre</th>
+                                                <th class="text-center">Abuela</th>
+                                                <th class="text-center">Abuelo</th>
+                                                <th class="text-center">Otros</th>
+                                                <th class="text-center">Padre</th>
+                                                <th class="text-center">Abuela</th>
+                                                <th class="text-center">Abuelo</th>
+                                                <th class="text-center">Hermanos</th>
+                                                <th class="text-center">Otros</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko foreach: antecedentesFamiliares-->
+                                            <tr>
+                                                <td data-bind="text: TipoPatologia"></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: Madre" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: AbuelaMaterna" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: AbueloMaterno" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: OtrosMaterno" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: Padre" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: AbuelaPaterna" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: AbueloPaterno" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: Hermanos" /></td>
+                                                <td><input type="checkbox" class="form-control" data-bind="value: OtrosPaterno" /></td>
+                                                <td>
+                                                    <input type="text" class="form-control" data-bind="visible: TipoPatologiaVerInputDescripcion,
+                                                        value: DescripcionOtraPatologia" />
+                                                </td>
+                                            </tr>
+                                            <!--/ko-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Antecedentes personales y patológicos</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-antecedentes-personales">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th><center>Presentó el antecedente</center></th>
+                                                <th>Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko foreach: antecedentesPersonales-->
+                                            <tr>
+                                                <td data-bind="text: NombreAntecedente"></td>
+                                                <td><input type="checkbox" class="form-control text-left" data-bind="checked: PresentoAntecedente" /></td>
+                                                <td><input type="date" class="form-control" data-bind="value: FechaAntecedente" /></td>
+                                            </tr>
+                                            <!--/ko-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                Observaciones:<br />
+                                @Html.TextAreaFor(m=>m.AntecedentesPersonalesObservaciones, new {@class="form-control"})
+                            </div>
+                            <div class="col-md-6">
+                                Otros:<br />
+                                @Html.TextAreaFor(m=>m.AntecedentesPersonalesOtros, new {@class="form-control"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Otras preguntas</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-preguntas-registro">
+                                        <thead>
+                                            <tr>
+                                                <th>Pregunta</th>
+                                                <th>Respuesta</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko foreach: preguntasRegistro-->
+                                            <tr>
+                                                <td data-bind="text: Pregunta"></td>
+                                                <td><input type="text" class="form-control" multiple data-bind="value: Respuesta" /></td>
+                                            </tr>
+                                            <!--/ko-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group">
+                                    <h5><b>Alergias</b></h5>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-alergias">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Anestesia local</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAnestesiaLocal, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAnestesiaLocal, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAnestesiaLocal, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Aspirina</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAspirina, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAspirina, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAspirina, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Penicilina u otros antibióticos</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaPenicilina, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaPenicilina, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaPenicilina, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Barbitúricos o pastillas para dormir</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaBarbiturios, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaBarbiturios, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaBarbiturios, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Sulfas</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaSulfas, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaSulfas, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaSulfas, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Codeína u otros narcóticos</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaCodeina, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaCodeina, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaCodeina, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Metales</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaMetales, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaMetales, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaMetales, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Latex (goma)</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaLatex, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaLatex, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaLatex, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Yodo</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaYodo, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaYodo, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaYodo, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Polen</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaPolen, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaPolen, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaPolen, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Animales</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAnimales, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAnimales, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAnimales, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Alimentos</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAlimentos, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAlimentos, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaAlimentos, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Otros</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaOtros, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaOtros, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.AlergiaOtros, "ns") N/S</td>
+                                                <td> @Html.TextBoxFor(a => a.AlergiaOtrosDescripcion, new{@class = "form-control",@placeholder = "Escriba aquí"})</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Información médica</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-informacion-medica">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Usa lentes de contacto</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaUsaLentesContacto, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaUsaLentesContacto, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaUsaLentesContacto, "ns") N/S</td>
+                                                <td>Descripción: @Html.TextBoxFor(a => a.MedicaUsaLentesContactoDescripcion, new{@class = "form-control", @placeholder = "Escriba aquí"})</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Articulaciones artificiales</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaArticulacionesArtificiales, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaArticulacionesArtificiales, "no") No</td>
+                                                <td>Fecha: @Html.TextBoxFor(a => a.MedicaArticulacionesArtificialesFecha, new { type = "date", @class = "form-control" })</td>
+                                                <td>¿Ha tenido complicaciones? @Html.TextBoxFor(a => a.MedicaArticulacionesArtificialesComplicaciones, new { @placeholder = "Escriba aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>¿Ha tomado o toma actualmente alendronato, risedronato?</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaTomaAlendronato, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaTomaAlendronato, "no") No</td>
+                                                <td></td>
+                                                <td>Fecha: @Html.TextBoxFor(a => a.MedicaTomaAlendronatoFecha, new { type = "date", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Tratamiento por dolor de huesos, hipercalcemia o alteraciones esqueléticas</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaTratamientoDolorHuesos, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaTratamientoDolorHuesos, "no") No</td>
+                                                <td>Fecha de inicio del tratamiento: @Html.TextBoxFor(a => a.MedicaTratamientoDolorHuesosFechaInicio, new { type = "date", @class = "form-control" })</td>
+                                                <td>Describa su caso: @Html.TextBoxFor(a => a.MedicaTratamientoDolorHuesosDescripcionCaso, new { @placeholder = "Escriba aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Sustancias reguladoras de drogas</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaSustanciasReguladorasDrogas, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaSustanciasReguladorasDrogas, "no") No</td>
+                                                <td></td>
+                                                <td>Fecha: @Html.TextBoxFor(a => a.MedicaSustanciasReguladorasDrogasFecha, new { type = "date", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>¿Usa tabaco?</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaUsaTabaco, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaUsaTabaco, "no") No</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Bebidas alcohólicas</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaBebidasAlcoholicas, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.MedicaBebidasAlcoholicas, "no") No</td>
+                                                <td></td>
+                                                <td>Descríbalo: @Html.TextBoxFor(a => a.MedicaBebidasAlcoholicasDescripcion, new { @placeholder = "Descríbalo", @class = "form-control" })</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Información dental</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-informacion-dental">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Sangrado al cepillar</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalSangradoCepillar, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalSangradoCepillar, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalSangradoCepillar, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Dolor con frío, calor o dulces</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorFrio, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorFrio, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorFrio, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Dolor al presionar</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorPresionar, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorPresionar, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorPresionar, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Objetos atorados, alimentos o seda dental entre los dientes</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalObjetosAtorados, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalObjetosAtorados, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalObjetosAtorados, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Boca seca</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBocaSeca, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBocaSeca, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBocaSeca, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Tratamiento periondal encía</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalTratamientoPeriondal, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalTratamientoPeriondal, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalTratamientoPeriondal, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Tratamiento de ortodoncia con aparatos</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalTratamientoOrtodoncia, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalTratamientoOrtodoncia, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalTratamientoOrtodoncia, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Problemas asociados a tratamiento dental</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalProblemasTratamientoDental, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalProblemasTratamientoDental, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalProblemasTratamientoDental, "ns") N/S</td>
+                                                <td>Descríbalo: @Html.TextBoxFor(a => a.DentalProblemasTratamientoDentalDescripcion, new { @placeholder = "Descríbalo", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>¿El agua del domicilio es fluorada?</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalFluoradaAguaDomicilio, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalFluoradaAguaDomicilio, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalFluoradaAguaDomicilio, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>¿Bebe agua embotellada o filtrada?</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBebeAguaFiltrada, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBebeAguaFiltrada, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBebeAguaFiltrada, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Dolor de oídos o cuello</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorOidos, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorOidos, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDolorOidos, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Molestia ruido alto en mandíbula</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalMolestiaRuidoAlto, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalMolestiaRuidoAlto, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalMolestiaRuidoAlto, "ns") N/S</td>
+                                                <td>Especifique: @Html.TextBoxFor(a => a.DentalMolestiaRuidoAltoDescripcion, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Brumismo o hace rechinar dientes</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBrumismo, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBrumismo, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalBrumismo, "ns") N/S</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Lesiones o ulceras en boca</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalLesiones, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalLesiones, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalLesiones, "ns") N/S</td>
+                                                <td>Especifique: @Html.TextBoxFor(a => a.DentalLesionesDescripcion, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>¿Usa dentaduras (placas) completas o parciales?</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDentaduraPlacas, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDentaduraPlacas, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalDentaduraPlacas, "ns") N/S</td>
+                                                <td>Especifique: @Html.TextBoxFor(a => a.DentalDentaduraPlacasDescripcion, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Actividades energicas de recreacion</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalActividadesRecreacion, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalActividadesRecreacion, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalActividadesRecreacion, "ns") N/S</td>
+                                                <td>Especifique: @Html.TextBoxFor(a => a.DentalActividadesRecreacionDescripcion, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Lesiones en cabeza o boca</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalLesionesCabeza, "si") Sí</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalLesionesCabeza, "no") No</td>
+                                                <td>@Html.RadioButtonFor(m => m.DentalLesionesCabeza, "ns") N/S</td>
+                                                <td>Observaciones: @Html.TextBoxFor(a => a.DentalLesionesCabezaDescripcion, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Análisis facial</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-analisis-facial">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Patrón facial</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPatron, "mesofacial") Mesofacial</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPatron, "dolico-facial") Dólico facial</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPatron, "broquiofacial") Broquiofacial</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialPatronObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Perfil</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfil, "recto") Recto</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfil, "concavo") Cóncavo</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfil, "convexo") Convexo</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialPerfilObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Asimetría</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAsimetria, "mandibula-derecha") Mand. derecha</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAsimetria, "mandibula-izquierda") Mand. izquierda</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAsimetria, "otras") Otras</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialAsimetriaObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Altura facial equilibrada</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAlturaFacialEquilibrada, "equilibrada") Equilibrada</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAlturaFacialEquilibrada, "larga") Larga</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAlturaFacialEquilibrada, "corta") Corta</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialAlturaFacialEquilibradaObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Ancho facial equilibrada</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAnchoFacialEquilibrada, "equilibrada") Equilibrada</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAnchoFacialEquilibrada, "estrecho") Estrecho</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialAnchoFacialEquilibrada, "amplio") Amplio</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialAnchoFacialEquilibradaObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Perfil maxilar</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfilMaxilar, "ortognatico") Ortognático</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfilMaxilar, "prognatico") Prognático</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfilMaxilar, "retrognatico") Retrognático</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialPerfilMaxilarObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Perfil madnibular</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfilMandibular, "ortognatico") Ortognático</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfilMandibular, "prognatico") Prognático</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialPerfilMandibular, "retrognatico") Retrognático</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialPerfilMandibularObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Surco labial mentón</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialSurcoLabialMenton, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialSurcoLabialMenton, "marcado") Marcado</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialSurcoLabialMenton, "borrado") Borrado</td>
+                                                <td>@Html.TextBoxFor(a => a.FacialSurcoLabialMentonObservaciones, new { @placeholder = "Descríbalo aquí", @class = "form-control" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Labios en reposo</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialLabiosReposo, "competentes") Competentes</td>
+                                                <td>@Html.RadioButtonFor(m => m.FacialLabiosReposo, "incompetentes") Incompetentes</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Análisis funcional</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-analisis-funcional">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Actividad comisurial</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalActividadComisurial, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalActividadComisurial, "contraccion") Contracción</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Actividad lingual</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalActividadLingual, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalActividadLingual, "interp-anterior") Interp. anterior</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalActividadLingual, "interp-lateral") Interp. lateral</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Labio superior</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalLabioSuperior, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalLabioSuperior, "interp-anterior") Interp. anterior</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalLabioSuperior, "interp-lateral") Interp. lateral</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Labio inferior</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalLabioInferior, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalLabioInferior, "interp-anterior") Interp. anterior</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalLabioInferior, "interp-lateral") Interp. lateral</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Masetero</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalMasetero, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalMasetero, "interp-anterior") Interp. anterior</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalMasetero, "interp-lateral") Interp. lateral</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Mentoniano</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalMentoniano, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalMentoniano, "interp-anterior") Interp. anterior</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalMentoniano, "interp-lateral") Interp. lateral</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Respiración</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalRespiracion, "bucal") Bucal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalRespiracion, "nasal") Nasal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalRespiracion, "mixta") Mixta</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Deglución</b></td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalDeglucion, "normal") Normal</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalDeglucion, "atipica") Atípica</td>
+                                                <td>@Html.RadioButtonFor(m => m.FuncionalDeglucion, "especial") Especial</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Patrón facial</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.PatronFacial, "patron-1") <b>
+                                        Patrón
+                                        I
+                                    </b>
+                                </label>
+                                <br><br>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.PatronFacial, "patron-2") <b>
+                                        Patrón
+                                        II
+                                    </b>
+                                </label>
+                                <br>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "retrusion-mandibular")
+                                    Retrusión
+                                    mandibular
+                                </label>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "protrusion-maxilar")
+                                    Protrusión
+                                    maxilar
+                                </label>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "aumento-afai") Con aumento
+                                    de
+                                    AFAI
+                                </label>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "afai-disminuida") Con AFAI
+                                    disminuida
+                                </label>
+                                <br><br>
+                                <label class="h6">@Html.RadioButtonFor(m => m.PatronFacial, "patron-3") <b>Patrón III</b></label>
+                                <br>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "protrusion-mandibular")
+                                    Protrusión
+                                    mandibular
+                                </label>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "retrusion-maxilar")
+                                    Retrusión
+                                    maxilar
+                                </label>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "aumento-afai") Con aumento
+                                    de
+                                    AFAI
+                                </label>
+                                <label class="h6">
+                                    @Html.RadioButtonFor(m => m.CaracteristicaPatronFacial, "afai-disminuida") Con AFAI
+                                    disminuida
+                                </label>
+                                <br><br>
+                                <label class="h6">@Html.RadioButtonFor(m => m.PatronFacial, "cara-corta") <b>Cara corta</b></label>
+                                <br><br>
+                                <label class="h6">@Html.RadioButtonFor(m => m.PatronFacial, "cara-larga") <b>Cara larga</b></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-2" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Antecedentes</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label>Médicos</label>
+                                    @Html.TextAreaFor(m => m.AntecedentesMedicos, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label>Quirúrgicos</label>
+                                    @Html.TextAreaFor(m => m.AntecedentesQuirurgicos, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label>Traumáticos</label>
+                                    @Html.TextAreaFor(m => m.AntecedentesTraumaticos, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label>Alergias</label>
+                                    @Html.TextAreaFor(m => m.AntecedentesAlergias, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label>Farmaco dependencias</label>
+                                    @Html.TextAreaFor(m => m.AntecedentesVicios, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label>Medicamentos</label>
+                                    @Html.TextAreaFor(m => m.AntecedentesMedicamentos, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-3" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Historia médica</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label>Nombre de médico personal</label>
+                                    @Html.TextBoxFor(m => m.HistoriaMedicoPersonal, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label>Teléfono de médico personal</label>
+                                    @Html.TextBoxFor(m => m.HistoriaTelefonoMedico, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label>Especialidad de médico personal</label>
+                                    @Html.TextBoxFor(m => m.HistoriaEspecialidadMedico, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>¿Se encuentra bajo algún tratamiento médico?</label>
+                                <select asp-for="HistoriaTratamientoMedico" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>¿Sangra mucho cuando se corta?</label>
+                                <select asp-for="HistoriaSangraMuchoCortarse" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="HistoriaHospitalizado">¿Ha sido hospitalizado(a) alguna vez?</label>
+                                <select asp-for="HistoriaHospitalizado" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="HistoriaOperado">¿Ha sido operado(a) alguna vez (incluyendo cirugías estéticas)?</label>
+                                <select asp-for="HistoriaOperado" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>¿Ha experimentado alergia a la penicilina o alguna otra medicina?</label>
+                                <select asp-for="HistoriaAlergiaMedicina" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="HistoriaAlergiaComida">¿Ha experimentado alergia a comida, polen, animales, polvo, otros?</label>
+                                <select asp-for="HistoriaAlergiaComida" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                                @Html.TextBoxFor(m => m.HistoriaAlergiaOtros,
+                                new { @class = "form-control",@placeholder="¿Cuáles?" })
+                            </div>
+                            <div class="col-md-4">
+                                <label for="HistoriaProblemaEmocional">¿Tiene algún problema emocional?</label>
+                                <select asp-for="HistoriaProblemaEmocional" class="form-control">
+                                    <option value="0">No</option>
+                                    <option value="1">Sí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="position-relative form-group">
+                                    <label>Observaciones</label>
+                                    @Html.TextAreaFor(m => m.HistoriaObservaciones, new { @class = "form-control",@placeholder="Observaciones" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-4" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                Nombre del padre<br>
+                                @Html.TextBoxFor(a => a.NombrePadre, new { @class = "form-control", @placeholder = "Nombre padre" })
+                                @Html.ValidationMessageFor(a => a.NombrePadre, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                Nombre de la madre
+                                @Html.TextBoxFor(a => a.NombreMadre, new { @class = "form-control", @placeholder = "Nombre madre" })
+                                @Html.ValidationMessageFor(a => a.NombreMadre, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Información de la madre del paciente</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-4">
+                                Fecha de nacimiento:<br>
+                                @Html.TextBoxFor(a => a.MadreFechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(a => a.FechaNacimiento, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                ¿Cuántos embarazos ha tenido?<br>
+                                @Html.TextBoxFor(a => a.MadreEmbarazos, new { type = "number", @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadreEmbarazos, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                ¿Cuántos partos normales ha tenido?<br>
+                                @Html.TextBoxFor(a => a.MadrePartosNormales, new { type = "number", @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadrePartosNormales, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                ¿Cuántas cesareas ha tenido?<br>
+                                @Html.TextBoxFor(a => a.MadreCesareas, new { type = "number", @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadreCesareas, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                ¿Cuántos abortos ha tenido?<br>
+                                @Html.TextBoxFor(a => a.MadreAbortos, new { type = "number", @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadreAbortos, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                Hijos vivos (HV)<br>
+                                @Html.TextBoxFor(a => a.MadreHijosVivos, new { type = "number", @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadreHijosVivos, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                Hijos muertos (HM)<br>
+                                @Html.TextBoxFor(a => a.MadreHijosMuertos, new { type = "number", @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadreHijosMuertos, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                Complicaciones (opcional)
+                                @Html.TextBoxFor(a => a.MadreComplicaciones, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.MadreComplicaciones, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Vacunas</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tabla-vacunas">
+                                        <thead>
+                                            <tr>
+                                                <th>Vacuna</th>
+                                                <th>Primera</th>
+                                                <th>Segunda</th>
+                                                <th>Tercera</th>
+                                                <th>Primer refuerzo</th>
+                                                <th>Segundo refuerzo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--ko foreach: vacunas-->
+                                            <tr>
+                                                <td data-bind="text: NombreVacuna"></td>
+                                                <td>
+                                                    <input type="checkbox" data-bind="value: Primera" /><br />
+                                                    Fecha:
+                                                    <input type="date" class="form-control" data-bind="value: FechaPrimera" />
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" data-bind="value: Segunda" /><br />
+                                                    Fecha:
+                                                    <input type="date" class="form-control" data-bind="value: FechaSegunda" />
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" data-bind="value: Tercera" /><br />
+                                                    Fecha:
+                                                    <input type="date" class="form-control" data-bind="value: FechaTercera" />
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" data-bind="value: PrimerRefuerzo" /><br />
+                                                    Fecha:
+                                                    <input type="date" class="form-control" data-bind="value: FechaPrimerRefuerzo" />
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" data-bind="value: SegundoRefuerzo" /><br />
+                                                    Fecha:
+                                                    <input type="date" class="form-control" data-bind="value: FechaSegundoRefuerzo" />
+                                                </td>
+                                            </tr>
+                                            <!--/ko-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-5" role="tabpanel">
+                <div class="form-row">
+                    <label class="font-weight-bold">GINECOLÓGICOS</label> &nbsp; &nbsp;
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-6" role="tabpanel">
+                <div class="form-row">
+                    <label class="font-weight-bold">NEUROLÓGICOS</label> &nbsp; &nbsp;
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-7" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Políticas de pago y cancelación del servicio</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Lea con atención las políticas de pago y cancelación del servicio<br>
+                        <p>
+                            <i>
+                                La fecha de inicio del tratamiento del paciente se tomará
+                                como referencia de fechas de pago (fecha de registro).
+                                Al no hacerse efectivo el abono mensual en la fecha correspondiente,
+                                el paciente contará con un máximo de 5 días para recalendarizar
+                                su cita y realizar el pago, evitando así el bloqueo para acceder
+                                al sistema del perfil en internet, grabaciones y sesiones en vivo
+                                del tratamiento.<br><br>
+                                Si fuera necesario recalendarizar la cita previamente programada,
+                                esta deberá hacerse con 24 horas de anticipación. De lo
+                                contrario, se hará un recargo de Q200 a su abono mensual.
+                            </i><br><br>
+
+                            @Html.CheckBoxFor(p=>p.PoliticasPagoAceptaTerminos)
+                            <label for="PoliticasPagoAceptaTerminos">Acepto conocer y cumplir los términos del presente documento</label>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <h5><b>Firma</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <canvas id="firma-politicas" style="width: 900px;height: 300px;background-color: #ffffff;border: 1px solid black;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-8" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Declaración de consentimiento</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Por medio de la presente, en uso de mis facultades, declaro participar por voluntad propia
+                        del tratamiento integral de adelgazamiento PlusVida, conociendo en detalle las indicaciones del mismo,
+                        asumiendo la responsabilidad de su cumplimiento y desligando de toda responsabilidad
+                        a PlusVida y a su equipo profesional de cualquier incidencia que pudiera ocurrir.<br /><br />
+                        Declaro que toda la información aquí completada es verídica.<br />
+                        Ciudad de Guatemala, @DateTime.Today.Date.ToShortDateString().
+                    </div>
+                    <div class="col-md-12">
+                        <h5><b>Firma</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <canvas id="firma-consentimiento" style="width: 900px;height: 300px;background-color: #ffffff;border: 1px solid black;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-eg2-9" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Tarjeta de crédito</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <label>Número de tarjeta</label>
+                        @Html.TextBoxFor(p=>p.NumeroTarjetaCredito, new { @placeholder="0000 0000 0000 0000",
+                        @class="form-control",@maxlength="16"})
+                    </div>
+                    <div class="col-md-12">
+                        <h5><b>Firma</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <canvas id="firma-tarjeta-credito" style="width: 900px;height: 300px;background-color: #ffffff;border: 1px solid black;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var pacienteId = '@ViewBag.PacienteId';
+</script>

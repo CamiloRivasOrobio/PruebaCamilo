@@ -1,0 +1,2147 @@
+@model sistema.Models.ConsultasViewModel
+@Html.HiddenFor(a => a.CitaId)
+@Html.HiddenFor(a => a.ConsultaId)
+@Html.HiddenFor(a => a.PrimeraConsulta)
+@Html.HiddenFor(a => a.HistoriaId)
+@Html.HiddenFor(a => a.ExamenFisicoId)
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div id="tabs">
+            <ul>
+                <li><a href="#tab-datos-paciente">Datos del paciente</a></li>
+                <li><a href="#tab-general">General</a></li>
+                <li><a href="#tab-dental">Dental</a></li>
+                <li><a href="#tab-medico">Médico</a></li>
+                <li><a href="#tab-pediatricos">Pediátricos</a></li>
+                <li><a href="#tab-ginecologicos">Ginecológicos</a></li>
+                <li><a href="#tab-neurologicos">Neurológicos</a></li>
+                <li><a href="#tab-nutricional">Nutricional</a></li>
+                <li><a href="#tab-examenes">Exámenes de laboratorio</a></li>
+                <li><a href="#tab-estetico">Estético</a></li>
+                <li><a href="#tab-rev-sistemas">Rev. por sistemas</a></li>
+                <li><a href="#tab-terapeutico">Área terapéutica</a></li>
+            </ul>
+            <div id="tab-datos-paciente">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Datos personales</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <b>Nombre: </b>@Model.PacienteNombre<br />
+                        <b>NIT: </b>@Model.PacienteNit<br />
+                        <b>Dirección: </b>@Model.PacienteDireccion<br />
+                        <b>Alias: </b>@Model.PacienteAlias<br />
+                        <b>Sexo: </b>@Model.PacienteSexo<br />
+                        <b>Fecha de nacimiento: </b>@Model.PacienteFechaNacimiento<br />
+                        <b>Edad: </b>@Model.PacienteEdad<br />
+                        <b>Teléfono: </b>@Model.PacienteTelefono<br />
+                        <b>Celular: </b>@Model.PacienteCelular
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Antecedentes</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <b>Antecedentes médicos: </b>@Model.PacienteMedicos<br />
+                        <b>Antecedentes quirúrgicos: </b>@Model.PacienteQuirurgicos <br />
+                        <b>Antecedentes traumáticos: </b>@Model.PacienteTraumaticos<br />
+                        <b>Alergias: </b>@Model.PacienteAlergias<br />
+                        <b>Vicios: </b>@Model.PacienteVicios<br />
+                        <b>Medicamentos: </b>@Model.PacienteMedicamentos
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <a asp-controller="Pacientes" asp-action="Modificar" asp-route-id="@Model.PacienteId"
+                           class="btn btn-primary text-white">
+                            Editar datos del paciente&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-general">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Información de consulta</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Costo de consulta</label>
+                            @Html.TextBoxFor(a => a.CostoConsulta, new
+                            {
+                            @class = "form-control",
+                            @placeholder = "Costo de consulta"
+                            })
+                            @Html.ValidationMessageFor(a => a.CostoConsulta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Estado de pago</label>
+                            <select class="form-control select2bs4" style="width: 100%;" asp-for="EstadoPagoId"
+                                    asp-items="@Model.EstadosPagosLista">
+                            </select>
+                        </div>
+                    </div>
+                    @* <div class="col-md-3">
+                        <div class="position-relative form-group">
+                        <label>Cuentas por cobrar</label>
+                        @Html.TextBoxFor(m => m.CuentasPorCobrar, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(a => a.CuentasPorCobrar, "", new { @class = "text-danger" })
+                        </div>
+                        </div> *@
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de creación de consulta</label>
+                            <input class="form-control" asp-for="FechaYHoraInicio" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de próxima consulta</label>
+                            <input class="form-control" asp-for="FechaProximaConsulta">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de su último examen</label>
+                            <input class="form-control" asp-for="FechaUltimaConsulta" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="position-relative form-group">
+                            <label>¿Qué le hicieron en esa ocasión?</label>
+                            <input class="form-control" asp-for="MotivoUltimaConsulta" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de su última radiografía/TAC/Resonancia magnética</label>
+                            @Html.TextBoxFor(a => a.FechaUltimaRadiografiaDental, new { @type = "date", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Tipo de consulta</label>
+                        <select class="form-control select2bs4" style="width: 100%;" asp-for="TipoConsulta">
+                            <option disabled selected>--- SELECCIONE ---</option>
+                            <option value="Primera Consulta">Primera Consulta</option>
+                            <option value="Nueva Consulta">Nueva Consulta</option>
+                            <option value="Reconsulta">Reconsulta</option>
+                            <option value="Observacion">Observacion</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Tipo de referencia</label>
+                        <select class="form-control select2bs4" style="width: 100%;" asp-for="TipoReferencia">
+                            <option disabled selected>--- SELECCIONE ---</option>
+                            <option value="Hospital Regional">Hospital Regional</option>
+                            <option value="Medico Particular">Medico Particular</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Medico Referido</label>
+                        <input class="form-control" asp-for="MedicoReferido">
+                        @Html.ValidationMessageFor(a => a.MedicoReferido, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Anotaciones u Observaciones</label>
+                        <textarea class="form-control" asp-for="ObservacionesAdicionales"
+                                  placeholder="Anotaciones u Observaciones"></textarea>
+                        @Html.ValidationMessageFor(a => a.ObservacionesAdicionales, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Servicios</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-7">
+                        <select class="form-control" data-bind="options: servicios,
+                                                                                optionsText: 'nombreServicio',
+                                                                                value: servicioSeleccionado,
+                                                                                event: {change:consultarPrecios}">
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" data-bind="options: precios,
+                                                                                optionsText: 'Precio',
+                                                                                value: precioSeleccionado"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary" style="color:white"
+                           data-bind="click: agregarServicioConsulta">
+                            <i class="fas fa-add"></i> Agregar
+                        </a>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <div class="table-responsive">
+                            <table class='table table-hover'>
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre servicio</th>
+                                        <th>Precio</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--ko foreach: serviciosAgregadosConsulta-->
+                                    <tr>
+                                        <td data-bind="text: ServicioId"></td>
+                                        <td data-bind="text: NombreServicio"></td>
+                                        <td data-bind="text: Precio"></td>
+                                        <td>
+                                            <a class="btn btn-primary"
+                                               style="color:white" data-bind="click: $root.quitarServicioConsulta">Quitar</a>
+                                        </td>
+                                    </tr>
+                                    <!--/ko-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Solo para mujeres</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-4">
+                        ¿Está usted embarazada?<br>
+                        @Html.RadioButtonFor(m => m.EstaEmbarazada, "si") Sí<br>
+                        Número de semanas<br>
+                        @Html.TextBoxFor(a => a.NumeroSemanasEmbarazo, new
+                        {
+                        type = "number",
+                        @class = "form-control",
+                        @placeholder = "Número de semanas"
+                        })
+                        @Html.RadioButtonFor(m => m.EstaEmbarazada, "no") No<br>
+                        @Html.RadioButtonFor(m => m.EstaEmbarazada, "ns") N/S
+                    </div>
+                    <div class="col-md-4">
+                        ¿Está usted tomando píldoras anticonceptivas o de sustitución hormonal?<br>
+                        @Html.RadioButtonFor(m => m.TomaPildorasAnticonceptivas, "si") Sí<br>
+                        @Html.RadioButtonFor(m => m.TomaPildorasAnticonceptivas, "no") No<br>
+                        @Html.RadioButtonFor(m => m.TomaPildorasAnticonceptivas, "ns") N/S
+                    </div>
+                    <div class="col-md-4">
+                        ¿Está usted amamantando?<br>
+                        @Html.RadioButtonFor(m => m.EstaAmamantando, "si") Sí<br>
+                        @Html.RadioButtonFor(m => m.EstaAmamantando, "no") No<br>
+                        @Html.RadioButtonFor(m => m.EstaAmamantando, "ns") N/S
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Bebidas alcohólicas</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                ¿Bebe bebidas alcohólicas?
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-2">
+                                    @Html.RadioButtonFor(m => m.BebeBebidasAlcoholicas, "si") Sí
+                                </div>
+                                <div class="col-md-4">
+                                    Si es así, ¿cuánto alcohol bebió en las últimas 24 horas?<br>
+                                    @Html.TextBoxFor(a => a.AlcoholUltimas24Horas, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    Si es así, ¿cuánto bebe por lo general en una semana?<br>
+                                    @Html.TextBoxFor(a => a.AlcoholSemanal, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(m => m.BebeBebidasAlcoholicas, "no") No
+                            </div>
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(m => m.BebeBebidasAlcoholicas, "ns") N/S
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-dental">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Mapa dental</b></h5><br>
+                        Seleccione el diente que desea examinar
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <center>
+                            <table style="font-weight: bolder;">
+                                <tr>
+                                    <td><center>1</center></td>
+                                    <td><center>2</center></td>
+                                    <td><center>3</center></td>
+                                    <td><center>4</center></td>
+                                    <td><center>5</center></td>
+                                    <td><center>6</center></td>
+                                    <td><center>7</center></td>
+                                    <td><center>8</center></td>
+                                    <td><center>9</center></td>
+                                    <td><center>10</center></td>
+                                    <td><center>11</center></td>
+                                    <td><center>12</center></td>
+                                    <td><center>13</center></td>
+                                    <td><center>14</center></td>
+                                    <td><center>15</center></td>
+                                    <td><center>16</center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d1.jpg" alt="1" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente1">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d2.jpg" alt="2" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente2">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d3.jpg" alt="3" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente3">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d4.jpg" alt="4" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente4">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d5.png" alt="5" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente5">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d6.png" alt="6" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente6">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d7.png" alt="7" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente7">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d8.png" alt="8" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente8">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d9.png" alt="9" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente9">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d10.png" alt="10" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente10">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d11.png" alt="11" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente11">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d12.png" alt="12" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente12">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d13.png" alt="13" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente13">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d14.png" alt="14" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente14">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d15.png" alt="15" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente15">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d16.png" alt="16" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente16">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d32.png" alt="32" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente32">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d31.png" alt="31" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente31">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d30.png" alt="30" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente30">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d29.png" alt="29" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente29">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d28.png" alt="28" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente28">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d27.png" alt="27" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente27">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d26.png" alt="26" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente26">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d25.png" alt="25" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente25">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d24.png" alt="24" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente24">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d23.png" alt="23" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente23">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d22.png" alt="22" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente22">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d21.png" alt="21" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente21">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d20.png" alt="20" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente20">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d19.png" alt="19" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente19">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d18.png" alt="18" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente18">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d17.png" alt="17" height="90"
+                                             style="cursor:pointer" data-bind="click: verServiciosDiente17">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><center>32</center></td>
+                                    <td><center>31</center></td>
+                                    <td><center>30</center></td>
+                                    <td><center>29</center></td>
+                                    <td><center>28</center></td>
+                                    <td><center>27</center></td>
+                                    <td><center>26</center></td>
+                                    <td><center>25</center></td>
+                                    <td><center>24</center></td>
+                                    <td><center>23</center></td>
+                                    <td><center>22</center></td>
+                                    <td><center>21</center></td>
+                                    <td><center>20</center></td>
+                                    <td><center>19</center></td>
+                                    <td><center>18</center></td>
+                                    <td><center>17</center></td>
+                                </tr>
+                            </table>
+                        </center>
+                        <br><br>
+                    </div>
+
+
+
+                    <div class="col-md-12 form-row">
+                        <div class="col-md-12">
+                            <h5><b>Servicios dentales</b></h5>
+                            <hr />
+                        </div>
+                        <div class="col-md-7">
+                            <select class="form-control"
+                                    data-bind="options: servicios,optionsText: 'nombreServicio', value: servicioSeleccionadoDiente, event: {change:consultarPreciosDiente}">
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control"
+                                    data-bind="options: preciosDiente, optionsText: 'Precio', value: precioSeleccionadoDiente"></select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" data-bind="click: agregarServicioDiente">
+                                <i class="fas fa-add"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente1">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente1-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente1">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente2">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente2-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente2">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente3">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente3-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente3">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente4">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente4-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente4">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente5">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente5-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente5">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente6">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente6-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente6">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente7">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente7-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente7">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente8">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente8-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente8">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente9">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente9-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente9">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente10">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente10-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente10">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente11">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente11-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente11">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente12">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente12-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente12">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente13">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente13-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente13">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente14">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente14-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente14">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente15">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente15-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente15">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente16">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente16-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente16">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente17">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente17-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente17">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente18">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente18-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente18">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente19">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente19-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente19">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente20">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente20-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente20">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente21">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente20-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente21">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente22">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente22-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente22">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente23">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente23-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente23">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente24">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente24-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente24">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente25">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente25-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente25">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente26">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente26-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente26">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente27">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente27-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente27">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente28">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente28-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente28">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente29">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente29-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente29">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente30">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente30-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente30">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente31">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente31-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente31">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-row" data-bind="visible: verDiente32">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="table-responsive">
+                                <table class='table table-hover'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre servicio</th>
+                                            <th>Precio</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--ko foreach: serviciosAgregadosDiente32-->
+                                        <tr>
+                                            <td data-bind="text: ServicioId"></td>
+                                            <td data-bind="text: NombreServicio"></td>
+                                            <td data-bind="text: Precio"></td>
+                                            <td><button class="btn-primary btn" data-bind="click: $root.quitarServicioDiente32">Quitar</button></td>
+                                        </tr>
+                                        <!--/ko-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--ko foreach: caracteristicasDentales-->
+                    <div class="col-md-12 p-0 form-row" data-bind="attr:{id:'caracteristicas-diente-'+NumeroDiente}" style="display:none">
+                        <div class="col-md-2" style="padding:5px">
+                            <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray; border-radius:10px">
+                                <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                    <center><b>PERCUSIONES</b></center>
+                                </div>
+                                <div class="p-2">
+                                    Diente No. <span><b data-bind="text: NumeroDiente"></b></span><br>
+                                    <input type="checkbox" data-bind="checked: Percusiones_VerticalMas" />&nbsp;&nbsp;Vertical +<br>
+                                    <input type="checkbox" data-bind="checked: Percusiones_HorizontalMas" />&nbsp;&nbsp;Horizontal +<br>
+                                    <input type="checkbox" data-bind="checked: Percusiones_VerticalMenos" />&nbsp;&nbsp;Vertical -<br>
+                                    <input type="checkbox" data-bind="checked: Percusiones_HorizontalMenos" />&nbsp;&nbsp;Horizontal -<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding:5px">
+                            <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray;border-radius:10px">
+                                <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                    <center><b>DOLOR</b></center>
+                                </div>
+                                <div class="p-2">
+                                    Diente No. <span><b data-bind="text: NumeroDiente"></b></span><br>
+                                    <input type="checkbox" data-bind="checked: Dolor_Localizado" />&nbsp;&nbsp;Localizada<br>
+                                    <input type="checkbox" data-bind="checked: Dolor_Fugaz" />&nbsp;&nbsp;Fugaz<br>
+                                    <input type="checkbox" data-bind="checked: Dolor_Persistente" />&nbsp;&nbsp;Persistente<br>
+                                    <input type="checkbox" data-bind="checked: Dolor_Referido" />&nbsp;&nbsp;Referido<br>
+                                    <input type="checkbox" data-bind="checked: Dolor_Espontaneo" />&nbsp;&nbsp;Espontáneo<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding:5px">
+                            <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray;border-radius:10px">
+                                <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                    <center><b>ESTÍMULO</b></center>
+                                </div>
+                                <div class="p-2">
+                                    Diente No. <span><b data-bind="text: NumeroDiente"></b></span><br>
+                                    <input type="checkbox" data-bind="checked: Estimulo_Frio" />&nbsp;&nbsp;Frío<br>
+                                    <input type="checkbox" data-bind="checked: Estimulo_Calor" />&nbsp;&nbsp;Calor<br>
+                                    <input type="checkbox" data-bind="checked: Estimulo_DulceAcido" />&nbsp;&nbsp;Dulce/Ácido<br>
+                                    <input type="checkbox" data-bind="checked: Estimulo_Masticacion" />&nbsp;&nbsp;Masticación<br>
+                                    <input type="checkbox" data-bind="checked: Estimulo_Otro" />&nbsp;&nbsp;Otro<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding:5px">
+                            <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray;border-radius:10px">
+                                <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                    <center><b>TÉRMICA AL FRÍO</b></center>
+                                </div>
+                                <div class="p-2">
+                                    Diente No. <span><b data-bind="text: NumeroDiente"></b></span><br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Positiva" />&nbsp;&nbsp;Positiva<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Negativa" />&nbsp;&nbsp;Negativa<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Localizada" />&nbsp;&nbsp;Localizada<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Fugaz" />&nbsp;&nbsp;Fugaz<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Incrementa" />&nbsp;&nbsp;Incrementa<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Referida" />&nbsp;&nbsp;Referida<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Irradiado" />&nbsp;&nbsp;Irradiado<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Persistente" />&nbsp;&nbsp;Persistente<br>
+                                    <input type="checkbox" data-bind="checked: TermicaFrio_Decrece" />&nbsp;&nbsp;Decrece<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding:5px">
+                            <div class="col-md-12 p-0" style="box-shadow: 1px 1px 5px 0px lightgray;border-radius:10px">
+                                <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                    <center><b>TÉRMICA AL CALOR</b></center>
+                                </div>
+                                <div class="p-2">
+                                    Diente No. <span><b data-bind="text: NumeroDiente"></b></span><br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Positiva" />&nbsp;&nbsp;Positiva<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Negativa" />&nbsp;&nbsp;Negativa<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Localizada" />&nbsp;&nbsp;Localizada<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Fugaz" />&nbsp;&nbsp;Fugaz<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Incrementa" />&nbsp;&nbsp;Incrementa<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Referida" />&nbsp;&nbsp;Referida<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Irradiado" />&nbsp;&nbsp;Irradiado<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Persistente" />&nbsp;&nbsp;Persistente<br>
+                                    <input type="checkbox" data-bind="checked: TermicaCalor_Decrece" />&nbsp;&nbsp;Decrece<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding: 5px">
+                            <div class="col-md-12 p-0" style="box-shadow: 1px 1px 5px 0px lightgray;border-radius:10px">
+                                <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                    <center><b>DIAGNÓSTICO</b></center>
+                                </div>
+                                <div class="p-2">
+                                    Diente No. <span><b data-bind="text: NumeroDiente"></b></span><br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_ManchaBlanca" />&nbsp;&nbsp;Mancha blanca<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Caries" />&nbsp;&nbsp;Caries<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Traumatismo" />&nbsp;&nbsp;Traumatismo<br><br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Abfraccion" />&nbsp;&nbsp;Abfracción (AB)<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Atricion" />&nbsp;&nbsp;Atrición (A)<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Erosion" />&nbsp;&nbsp;Erosión<br><br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Restauracion" />&nbsp;&nbsp;Restauración<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Ajustada" />&nbsp;&nbsp;Ajustada<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_Desajustada" />&nbsp;&nbsp;Desajustada<br><br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_PulpaSana" />&nbsp;&nbsp;Pulpa sana<br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_PulpitisReversible" />&nbsp;&nbsp;Pulpitis reversible<br><br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_PulpitisIrreversible" />&nbsp;&nbsp;Pulpitis irreversible<br><br>
+                                    <input type="checkbox" data-bind="checked: Diagnostico_NecrosisPulpar" />&nbsp;&nbsp;Necrosis pulpar<br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ko-->
+                </div>
+            </div>
+            <div id="tab-medico">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Historia clínica</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Historia del problema<br />
+                        @Html.TextAreaFor(m => m.HistoriaProblema, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-12">
+                        Síntomas<br />
+                        @Html.TextAreaFor(m => m.Sintomas, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-12">
+                        Diagnóstico<br />
+                        @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Examen físico</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Temperatura<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoTemperatura, new { @class = "form-control", @placeholder = "Temperatura" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Frecuencia respiratoria<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoFrecuenciaRespiratoria, new { @class = "form-control", @placeholder = "Frecuencia respiratoria" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Frecuencia cardíaca<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoFrecuenciaCardiaca, new { @class = "form-control", @placeholder = "Frecuencia cardíaca" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Saturación de oxígeno<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoSaturacionOxigeno, new { @class = "form-control", @placeholder = "Saturación de oxígeno" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Presión arterial brazo derecho<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoPresionArterialBrazoDerecho, new
+                            {
+                            @class = "form-control",
+                            @placeholder = "Presión arterial brazo derecho"
+                            })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Presión arterial brazo izquierdo<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoPresionArterialBrazoIzquierdo, new
+                            {
+                            @class = "form-control",
+                            @placeholder = "Presión arterial brazo izquierdo"
+                            })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Peso<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoPeso, new { @class = "form-control", @placeholder = "Peso", @onchange = "getIMC()" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Talla<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoTalla, new { @class = "form-control", @placeholder = "Talla", @onchange = "getIMC()" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            IMC<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoIMC, new { @class = "form-control", @placeholder = "IMC", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            Glucosa<br>
+                            @Html.TextBoxFor(m => m.ExamenFisicoGlucosa, new { @class = "form-control", @placeholder = "Glucosa" })
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            Observaciones<br>
+                            @Html.TextAreaFor(m => m.ExamenFisicoObservaciones, 2, 500, new { @class = "form-control", @placeholder = "Observaciones" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-pediatricos">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Esquema de vacunación</b></h5>
+                        <hr />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="table-responsive">
+                        <table class="mb-0 table table-hover">
+                            <thead>
+                                <tr>
+                                    <td><center><b>Vacuna</b></center></td>
+                                    <td><center><b>Primera</b></center></td>
+                                    <td><center><b>Segunda</b></center></td>
+                                    <td><center><b>Tercera</b></center></td>
+                                    <td><center><b>Primer refuerzo</b></center></td>
+                                    <td><center><b>Segundo refuerzo</b></center></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko foreach: vacunas-->
+                                <tr>
+                                    <td data-bind="text: NombreVacuna"></td>
+                                    <td>
+                                        <input data-bind="value: Primera" type="checkbox" />
+                                        <input class="form-control" data-bind="value: FechaPrimera" type="date" />
+                                    </td>
+                                    <td>
+                                        <input data-bind="value: Segunda" type="checkbox" />
+                                        <input class="form-control" data-bind="value: FechaSegunda" type="date" />
+                                    </td>
+                                    <td>
+                                        <input data-bind="value: Tercera" type="checkbox" />
+                                        <input class="form-control" data-bind="value: FechaTercera" type="date" />
+                                    </td>
+                                    <td>
+                                        <input data-bind="value: PrimerRefuerzo" type="checkbox" />
+                                        <input class="form-control" data-bind="value: FechaPrimerRefuerzo" type="date" />
+                                    </td>
+                                    <td>
+                                        <input data-bind="value: SegundoRefuerzo" type="checkbox" />
+                                        <input class="form-control" data-bind="value: FechaSegundoRefuerzo" type="date" />
+                                    </td>
+                                </tr>
+                                <!--/ko-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-ginecologicos">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Examen ginecológico</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Examen ginecológico<br />
+                        @Html.TextAreaFor(m => m.ExamenGinecologico, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div id="tab-neurologicos">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Examen neurológico</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Examen neurológico<br />
+                        @Html.TextAreaFor(m => m.ExamenNeurologico, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div id="tab-nutricional">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Fase del tratamiento</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Seleccione la fase del tratamiento en que clasifica al paciente</label>
+                                <select class="form-control" asp-for="FaseTratamientoId" asp-items="@Model.FasesTratamientoSelectListItems"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-11">
+                        <h5><b>Seguimiento nutricional</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" data-bind="click: agregarSeguimientoNutricional">Agregar</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="table-responsive">
+                        <table class="mb-0 table table-hover">
+                            <thead>
+                                <tr>
+                                    <td><center><b>Fecha</b></center></td>
+                                    <td><center><b>Peso</b></center></td>
+                                    <td><center><b>IMC</b></center></td>
+                                    <td><center><b>PGC</b></center></td>
+                                    <td><center><b>Cuello</b></center></td>
+                                    <td><center><b>Busto</b></center></td>
+                                    <td><center><b>Cintura/Abdomen</b></center></td>
+                                    <td><center><b>Cadera</b></center></td>
+                                    <td><center><b>Muslo</b></center></td>
+                                    <td><center><b>Brazo</b></center></td>
+                                    <td><center><b>Muñeca</b></center></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--ko foreach: seguimientosNutricionales-->
+                                <tr>
+                                    <td>
+                                        <input type="date" class="form-control"
+                                               data-bind="value: Fecha" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Peso" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: IMC" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: PGC" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Cuello" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Busto" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: CinturaAbdomen" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Cadera" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Muslo" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Brazo" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control"
+                                               data-bind="value: Munneca" />
+                                    </td>
+                                </tr>
+                                <!--/ko-->
+                            </tbody>
+                        </table><br><br>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-11">
+                        <h5><b>Rangos saludables</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" data-bind="click:agregarRangoSaludable">Agregar</button>
+                    </div>
+                    <!--ko foreach: rangosSaludables-->
+                    <div class="col-md-4">
+                        <label>IMC saludable</label><br />
+                        <input type="text" class="form-control" data-bind="value:IMC" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Peso saludable</label><br />
+                        <input type="text" class="form-control" data-bind="value:Peso" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Porcentaje (%) de grasa corporal saludable</label><br />
+                        <input type="text" class="form-control" data-bind="value:PorcentajeGrasaCorporal" />
+                    </div>
+                    <!--/ko-->
+                    <div class="col-md-12">
+                        <h5><b>Historial rangos saludables</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>IMC</th>
+                                    <th>Peso</th>
+                                    <th>Porcentaje de grasa corporal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.RangosSaludablesHistorico == null)
+                                {
+                                    <tr>
+                                        <td colspan="4">No hay registros para mostrar</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var historico in Model.RangosSaludablesHistorico)
+                                    {
+                                        <tr>
+                                            <td>@historico.Fecha</td>
+                                            <td>@historico.IMC</td>
+                                            <td>@historico.Peso</td>
+                                            <td>@historico.PorcentajeGrasaCorporal</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Seguimiento de dieta</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Seguimiento de dieta</label><br />
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <label>Ejercicio</label><br />
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <label>Observaciones generales</label><br />
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div id="tab-examenes">
+                <div class="form-row">
+                    <div class="col-11">
+                        <h5><b>Resultados de exámenes de laboratorio</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" data-bind="click: agregarExamenesLaboratorio">Agregar</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="table-responsive">
+                        <table class="mb-0 table table-hover">
+                            <tbody>
+                                <!--ko foreach: examenesLaboratorio-->
+                                <tr>
+                                    <td class="form-row col-md-12">
+                                        <div class="col-md-2">
+                                            <label>Fecha</label>
+                                            <input type="date" class="form-control"
+                                                   data-bind="value: Fecha" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Glucosa Pre</label>
+                                            <input type="text" class="form-control" data-bind="value:GlucosaPre" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Glucosa Post</label>
+                                            <input type="text" class="form-control" data-bind="value:GlucosaPos" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Hemoglobina glicosilada</label>
+                                            <input type="text" class="form-control" data-bind="value:HemoglobinaGlicosilada" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Curva de glucosa</label>
+                                            <input type="text" class="form-control" data-bind="value:CurvaGlucosa" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Colesterol total</label>
+                                            <input type="text" class="form-control" data-bind="value:ColesterolTotal" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Triglicéridos</label>
+                                            <input type="text" class="form-control" data-bind="value:Trigliceridos" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Perfil lipídico</label>
+                                            <input type="text" class="form-control" data-bind="value:PerfilLipidico" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Creatinina</label>
+                                            <input type="text" class="form-control" data-bind="value:Creatinina" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Ácido úrico</label>
+                                            <input type="text" class="form-control" data-bind="value:AcidoUrico" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Hemoglobina</label>
+                                            <input type="text" class="form-control" data-bind="value:Hemoglobina" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>T3</label>
+                                            <input type="text" class="form-control" data-bind="value:T3" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>T4</label>
+                                            <input type="text" class="form-control" data-bind="value:T4" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Examen de heces</label>
+                                            <input type="text" class="form-control" data-bind="value:ExamenHeces" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Examen de orina</label>
+                                            <input type="text" class="form-control" data-bind="value:ExamenOrina" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>Otros</label>
+                                            <input type="text" class="form-control" data-bind="value:Otros" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Adjuntar resultados</label>
+                                            <input type="file" data-bind="attr:{id:'resultados-laboratorio-'+Item}" class="form-control" />
+                                        </div>
+                                        <div class="col-md-12" style="text-align:right">
+                                            <br /><br />
+                                            <button class="btn btn-danger" data-bind="click:$root.quitarExamenLaboratorio">Quitar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--/ko-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-estetico">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Estética</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.Metabolismo)
+                        @Html.TextBoxFor(m => m.Metabolismo, new { @class = "form-control", @placeholder = "Metabolismo" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.Grasa)
+                        @Html.TextBoxFor(m => m.Grasa, new { @class = "form-control", @placeholder = "Grasa" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.IMC)
+                        @Html.TextBoxFor(m => m.IMC, new { @class = "form-control", @placeholder = "IMC", @readonly = "true" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.Agua)
+                        @Html.TextBoxFor(m => m.Agua, new { @class = "form-control", @placeholder = "Agua" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.Obesidad)
+                        @Html.TextBoxFor(m => m.Obesidad, new { @class = "form-control", @placeholder = "Obesidad" })
+                    </div>
+                    <div class="col-md-4">
+                        Contorno de brazos<br>
+                        @Html.TextBoxFor(m => m.ContornoBrazos, new { @class = "form-control", @placeholder = "Contorno de brazos" })
+                    </div>
+                    <div class="col-md-4">
+                        Contorno de busto<br>
+                        @Html.TextBoxFor(m => m.ContornoBusto, new { @class = "form-control", @placeholder = "Contorno de busto" })
+                    </div>
+                    <div class="col-md-4">
+                        Contorno de abdomen<br>
+                        @Html.TextBoxFor(m => m.ContornoAbdomen, new { @class = "form-control", @placeholder = "Contorno de abdomen" })
+                    </div>
+                    <div class="col-md-4">
+                        Contorno de cadera<br>
+                        @Html.TextBoxFor(m => m.ContornoCadera, new { @class = "form-control", @placeholder = "Contorno de cadera" })
+                    </div>
+                    <div class="col-md-4">
+                        Contorno de piernas<br>
+                        @Html.TextBoxFor(m => m.ContornoPiernas, new { @class = "form-control", @placeholder = "Contorno de piernas" })
+                    </div>
+                    <div class="col-md-4">
+                        Estatura (m)<br>
+                        @Html.TextBoxFor(m => m.Estatura, new
+                        {
+                        @class = "form-control",
+                        @placeholder = "Estatura",
+                        @onchange = "actualizarVista()",
+                        @onkeyup = "actualizarVista()"
+                        })
+                    </div>
+                </div>
+            </div>
+            <div id="tab-rev-sistemas">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Sistema cardiopulmonar</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Sistema cardiopulmonar<br />
+                        @Html.TextAreaFor(m => m.SistemaCardiopulmonar, new { @class = "form-control" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Sistema osteoarticular</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Sistema osteoarticular<br />
+                        @Html.TextAreaFor(m => m.SistemaOsteoarticular, new { @class = "form-control" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Sistema hematológico</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        Sistema hematológico<br />
+                        @Html.TextAreaFor(m => m.SistemaHematologico, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div id="tab-terapeutico">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Área terapéutica</b></h5>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            @if (Model.PrimeraConsulta)
+                            {
+                                <div class="col-md-6">
+                                    <label>Datos generales</label><br>
+                                    @Html.TextAreaFor(m => m.TerapeuticoDatosGenerales, new { @class = "form-control", @placeholder = "Datos generales" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Actividades diarias (horarios, rutinas)</label><br>
+                                    @Html.TextAreaFor(m => m.TerapeuticoActividadesDiarias, new { @class = "form-control", @placeholder = "Actividades diarias" })
+                                </div> <div class="col-md-6">
+                                    <label>¿Con quién vive?</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoConQuienVive, new { @class = "form-control", @placeholder = "¿Con quién vive?" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Hábitos alimenticios (horarios, quién cocina, super)</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoHabitosAlimenticios, new { @class = "form-control", @placeholder = "Hábitos alimenticios" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Ejercicio (deporte)</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoEjercicio, new { @class = "form-control", @placeholder = "Ejercicio" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Fines de semana</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoFinesSemana, new { @class = "form-control", @placeholder = "Fines de semana" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Historia médica</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoHistoriaMedica, new { @class = "form-control", @placeholder = "Historia médica" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Historia con el peso</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoHistoriaPeso, new { @class = "form-control", @placeholder = "Historia con el peso" })
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6">
+                                    <label>Datos generales</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoDatosGenerales, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Actividades diarias (horarios, rutinas)</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoActividadesDiarias, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>¿Con quién vive?</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoConQuienVive, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Hábitos alimenticios (horarios, quién cocina, super)</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoHabitosAlimenticios, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Ejercicio (deporte)</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoEjercicio, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Fines de semana</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoFinesSemana, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Historia médica</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoHistoriaMedica, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Historia con el peso</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoHistoriaPeso, new { @class = "form-control", @readonly = "true" })
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Observaciones</label>
+                                    @Html.TextAreaFor(m => m.TerapeuticoObservaciones, new { @class = "form-control", @placeholder = "Observaciones" })
+                                </div>
+                                <div class="col-md-12">
+                                    <h5><b>Historial observaciones</b></h5>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha y hora</th>
+                                                <th>Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var historico in Model.TerapeuticoHistoricoObservaciones)
+                                            {
+                                                var observaciones = historico.Observaciones ?? "-";
+                                                <tr>
+                                                    <td>@historico.Fecha</td>
+                                                    <td>@observaciones</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    var idConsulta = '@ViewBag.ConsultaId';
+    var pacienteId = '@ViewBag.PacienteId';
+
+    function getIMC() {
+        // Obtener los valores de los campos de entrada de texto y convertirlos a números
+        let peso = parseFloat($("#ExamenFisicoPeso").val());
+        let talla = parseFloat($("#ExamenFisicoTalla").val());
+        console.log(peso);
+        console.log(talla);
+
+        if (peso > 0 && talla > 0) {
+            talla /= 100;
+
+            // Calcular el IMC
+            const imc = peso / (talla * talla);
+            console.log(imc);
+            // Devolver el resultado redondeado a dos decimales
+            $("#ExamenFisicoIMC").val(imc.toFixed(2));
+
+        }
+    }
+</script>

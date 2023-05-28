@@ -1,0 +1,167 @@
+@model sistema.Models.InsumosFarmaciaViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Clínica - Insumos médicos";
+}
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12 text-center">
+                <h4><b>Clínica - Insumos m&eacute;dicos</b></h4>
+                <hr />
+            </div>
+            <div class="col-md-12">
+                <a asp-action="ClinicaInsumosMedicosNuevo" asp-controller="Productos" class="btn btn-danger">
+                    Nuevo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Filtrar</b></h5>
+                <hr />
+            </div>
+            <form asp-action="ClinicaInsumosMedicos" asp-route-categoriaId="@Model.categoriaId" method="get" class="col-md-12 form-row">
+                <div class="col-md-12">
+                    <label><b>Categoría</b></label>
+                </div>
+                <div class="col-md-10">
+                    <select class="form-control select2bs4 col-md-11" asp-for="categoriaId" asp-items="@Model.CategoriasSelectList">
+                        <option selected="selected">--- TODOS ---</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Buscar" class="btn btn-success">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*<div class="form-row">
+    <div class="col-12">
+    <div style="display:none;">
+    <a asp-action="InsumosClinicaReporte" asp-controller="Productos" class="btn btn-danger"
+    asp-route-categoriaId="@Model.categoriaId" asp-route-currentFilter="@Model.currentFilter">
+    Generar PDF &nbsp; <i class="fas fa-file-pdf"></i>
+    </a>
+    </div>
+    </div>
+    </div>*@
+
+<div class="form-row">
+    <div class="col-md-12">
+        <div class="card mb-3 widget-content">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="widget-heading">Total insumos registrados</div>
+                </div>
+                <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">
+                        <span> @Model.TotalInsumos </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-row">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tabla-clinica-insumos">
+                        <thead>
+                            <tr>
+                                <th>Nombre Producto</th>
+                                <th>Codigo Referencia</th>
+                                <th>Categoría</th>
+                                <th>Stock</th>
+                                <th>Precio al público</th>
+                                @* <th>Precio Costo</th> *@
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ProductosInventario)
+                            {
+                                var categoria = item.Categoria == null ? "" : item.Categoria.NombreCategoria;
+
+                                <tr>
+                                    <td class="font-weight-bold"> @item.NombreProducto</td>
+                                    <td>@item.CodigoReferencia</td>
+                                    <td>@categoria</td>
+                                    <td class="text-primary font-weight-bold">
+                                        <h6>@item.Stock</h6>
+                                    </td>
+                                    <td>Q @item.Precio_5</td>
+                                    @* <td>Q @item.PrecioCosto</td> *@
+                                    <td>
+                                        @if (string.IsNullOrEmpty(@item.Imagen))
+                                        {
+                                            <img src="~/Images/imagenotavailable.png" width="90">
+                                        }
+                                        else
+                                        {
+                                            <img src="@item.Imagen" width="90">
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("ClinicaInsumosMedicosModificar","Productos", new {id = @item.Id})"
+                                       class="btn btn-warning">
+                                            Modificar
+                                        </a>
+                                    </td>
+
+                                    @if (item.Stock <= 5)
+                                    {
+                                        <td><i class="fas fa-exclamation-circle" data-toggle="tooltip" data-placement="top" title="Stock bajo"></i></td>
+                                    }
+
+                                    @if (item.FechaVencimiento != null && item.FechaVencimiento < DateTime.Now)
+                                    {
+                                        <td><i class="fas fa-clock" data-toggle="tooltip" data-placement="top" title="fecha vencida"></i></td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script type="text/javascript" src="~/js/moment.min.js"></script>
+<script type="text/javascript" src="~/js/daterangepicker.js"></script>
+<script type="text/javascript" src="~/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!--Knockout-->
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script type="text/javascript" src="~/ViewModelKo/ClinicaInsumosMedicosListaVM.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+    }
+
+@section css
+{
+<link href="~/css/daterangepicker.css" rel="stylesheet">
+}

@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "Lista personas";
+}
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="text-center">
+            <h4><b>Personas</b></h4>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <a class="btn btn-danger btn-sm" asp-action="Nueva" asp-controller="Personas">
+            Nueva persona
+        </a>
+    </div>
+</div>
+
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tabla-personas">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>E-mail</th>
+                        <th>Red social</th>
+                        <th>Sexo</th>
+                        <th>Fecha de contacto</th>
+                        <th>Paciente</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--ko foreach: personas-->
+                    <tr>
+                        <td data-bind="text: nombre"></td>
+                        <td data-bind="text: telefono"></td>
+                        <td data-bind="text: email"></td>
+                        <td data-bind="text: tipoRedSocial"></td>
+                        <td data-bind="text: sexo.descripcionSexo"></td>
+                        <td data-bind="text: moment(fechaContacto).format('ll')"></td>
+                        <td data-bind="text: !paciente ? 'No' : 'Sí'"></td>
+                        <td>
+                            <button class="btn btn-primary" data-bind="click: $root.convertirPaciente">Registrar como paciente</button>
+                            <button class="btn btn-primary" data-bind="click: $root.editarPersona">Editar</button>
+                            <button class="btn btn-primary" data-bind="click: $root.eliminarPersona">Eliminar</button>
+                        </td>
+                    </tr>
+                    <!--/ko-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script type="text/javascript" src="~/ViewModelKo/PersonasListaVM.js"></script>

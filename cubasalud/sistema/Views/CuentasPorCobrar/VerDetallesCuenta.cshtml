@@ -1,0 +1,82 @@
+@model Database.Shared.Models.CuentaPorCobrar;
+@{
+    ViewData["Title"] = "Detalles de cuenta";
+
+    var fechaRegistro = Model.Paciente.FechaRegistro == null ? "-" : Convert.ToDateTime(Model.Paciente.FechaRegistro).ToString("yyyy/MM/dd");
+
+    //Información de la cuenta
+    var fechaLimitePago = Model.FechaLimitePago == null ? "-" : Convert.ToDateTime(Model.FechaLimitePago).ToString("yyyy/MM/dd");
+    var valorCuenta = Model.Valor ?? 0;
+    var cuentaPagada = Model.Pagada ? "Si" : "No";
+    var observacionesCuenta = Model.Observaciones??"-";
+}
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="col-md-12 text-center">
+            <h4><b>Detalles de cuenta</b></h4><br />
+            @Model.Paciente.Nombre
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Datos del paciente</b></h5>
+                <hr />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <b>Nombre</b><br />
+                @Model.Paciente.Nombre
+            </div>
+            <div class="col-md-4">
+                <b>Fecha de registro</b><br />
+                @fechaRegistro
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Informaci&oacute;n de la cuenta</b></h5>
+                <hr />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <b>Fecha l&iacute;mite de pago</b><br />
+                @fechaLimitePago
+            </div>
+            <div class="col-md-4">
+                <b>Valor</b><br />
+                @valorCuenta
+            </div>
+            <div class="col-md-4">
+                <b>Pagada</b><br />
+                @cuentaPagada
+            </div>
+            <div class="col-md-4">
+                <b>Observaciones</b><br />
+                @observacionesCuenta
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="/CuentasPorCobrar/Modificar?cuentaId=@Model.Id">Modificar</a>
+            <a class="btn btn-primary" href="/CuentasPorCobrar/Pagar?cuentaId=@Model.Id">Pagar</a>
+        </div>
+    </div>
+</div>

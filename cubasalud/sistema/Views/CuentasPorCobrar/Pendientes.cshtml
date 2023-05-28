@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = "Cuentas pendientes";
+}
+
+<link rel="stylesheet" href="~/js/DataTables/datatables.css" />
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="text-center">
+            <h4><b>Cuentas pendientes</b></h4>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tabla-cuentas-por-cobrar">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Paciente</th>
+                        <th>Fecha límite de pago</th>
+                        <th>Valor</th>
+                        <th>Pagada</th>
+                        <th>Modificar</th>
+                        <th>Ver detalles</th>
+                        <th>Pagar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--ko foreach: cuentasPorCobrar-->
+                    <tr>
+                        <td data-bind="text: id"></td>
+                        <td data-bind="text: paciente.nombre"></td>
+                        <td data-bind="text: moment(fechaLimitePago).format('ll')"></td>
+                        <td data-bind="text: valor"></td>
+                        <td data-bind="text: pagadaText"></td>
+                        <td>
+                            <button class="btn btn-primary" data-bind="click: $root.modificarCuenta">Modificar</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" data-bind="click: $root.verDetallesCuenta">Ver detalles</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" data-bind="click: $root.pagarCuenta">Pagar</button>
+                        </td>
+                    </tr>
+                    <!--/ko-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script src="~/ViewModelKo/CuentasPorCobrarListaVM.js"></script>

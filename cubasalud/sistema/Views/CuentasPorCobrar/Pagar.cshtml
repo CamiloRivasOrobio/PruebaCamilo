@@ -1,0 +1,129 @@
+@model sistema.Models.CuentasPorCobrarPagarViewModel;
+
+@{
+    ViewData["Title"] = "Pagar cuenta";
+}
+@Html.HiddenFor(c=>c.CuentaId)
+@Html.HiddenFor(c=>c.PacienteId)
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12 text-center">
+                <h4><b>Pagar cuenta</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Datos de factura</b></h5>
+                <hr />
+            </div>
+            <div class="col-md-3">
+                <label>No. de comprobante</label>
+                @Html.TextBoxFor(m=>m.NoComprobante, new{@class="form-control", @placeholder="Numero de comprobante"})
+            </div>
+            <div class="col-md-3">
+                <label>C&oacute;digo de vendedor</label>
+                @Html.TextBoxFor(m=>m.EmpleadoId, new{@class="form-control", @placeholder="Codigo de vendedor"})
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Datos del paciente</b></h5>
+                <hr />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <b>Nombre</b><br />
+                @Model.PacienteNombre
+            </div>
+            <div class="col-md-3">
+                <b>Nit</b><br />
+                @Model.PacienteNit
+            </div>
+            <div class="col-md-3">
+                <b>Dirección</b><br />
+                @Model.PacienteDireccion
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Datos de la cuenta</b></h5>
+                <hr />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                <label><b>Valor</b></label><br />
+                @Model.Valor
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                <label><b>Observaciones</b></label><br />
+                @Model.Observaciones
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h5><b>Datos de pago</b></h5>
+                <hr />
+            </div>
+            <div class="col-md-4">
+                <label class="">Forma de pago</label>
+                <select class="form-control"
+                        asp-for="@Model.FormaPagoId"
+                        asp-items="@Model.FormaPagoSelectListItems">
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="">Moneda</label>
+                <select class="form-control"
+                        asp-for="@Model.MonedaId"
+                        asp-items="@Model.MonedaSelectListItems">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <button class="btn btn-danger">Cancelar</button>
+                <button class="btn btn-primary" data-bind="click:pagarCuenta">Pagar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+<script type="text/javascript" src="~/js/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script src="~/ViewModelKo/CuentasPorCobrarPagarVM.js"></script>
+}

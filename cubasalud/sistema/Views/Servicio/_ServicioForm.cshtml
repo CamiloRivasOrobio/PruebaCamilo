@@ -1,0 +1,114 @@
+@model sistema.Models.ServicioBaseViewModel
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Informaci&oacute;n general</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <label>Nombre del servicio</label>
+                        @Html.TextBoxFor(a => a.NombreServicio, new {@class="form-control",
+                        @placeholder="Nombre del servicio"})
+                    </div>
+                    <div class="col-md-12">
+                        <label class="">Descripcion</label>
+                        @Html.TextAreaFor(a => a.Descripcion,5,500 ,htmlAttributes : new {
+                        @class="form-control ", @placeholder="Descripcion", @style="max-width:100% !important;"})
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Insumos utilizados</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Insumo</label>
+                        <select class="form-control" data-bind="options:insumos,
+                                    optionsText:'nombreProducto',
+                                    value:insumoSeleccionado"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Unidad de venta</label>
+                        <select class="form-control" data-bind="options:unidadesVentaInsumo,
+                                    optionsText:'nombre',
+                                    value:unidadVentaSeleccionada"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Cantidad utilizada</label>
+                        <input class="form-control" data-bind="value:cantidadUtilizadaInsumo" />
+                    </div>
+                    <div class="col-md-3">
+                        <br />
+                        <input type="button" class="btn btn-primary" data-bind="click: agregarInsumo" value="Agregar">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <br />
+                    <table class="table-hover table">
+                        <thead>
+                            <tr>
+                                <th><b>Nombre del insumo</b></th>
+                                <th><b>Unidad de venta</b></th>
+                                <th><b>Cantidad utilizada</b></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko foreach: insumosUtilizados-->
+                            <tr>
+                                <td data-bind="text: NombreInsumo"></td>
+                                <td data-bind="text: UnidadMedidaVentaNombre"></td>
+                                <td data-bind="text: CantidadUtilizada"></td>
+                                <td><button class="btn btn-danger" data-bind="click:$root.quitarInsumoUtilizado">Quitar</button></td>
+                            </tr>
+                            <!--/ko-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Precios</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Precio Normal</label>
+                            @Html.TextBoxFor(a => a.Precio, new{ @class="form-control",@placeholder="Precio"})
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Precio Vip</label>
+                            @Html.TextBoxFor(a => a.Precio_2, new{ @class="form-control",@placeholder="Precio"})
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Precio Social</label>
+                            @Html.TextBoxFor(a => a.Precio_3, new{ @class="form-control", @placeholder="Precio"})
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Precio IGSS</label>
+                            @Html.TextBoxFor(a => a.Precio_4, new{ @class="form-control", @placeholder="Precio"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

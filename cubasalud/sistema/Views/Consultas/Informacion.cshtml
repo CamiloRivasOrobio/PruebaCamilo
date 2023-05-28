@@ -1,0 +1,1529 @@
+@model sistema.Models.InfoConsultaViewModel
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="text-center">
+            <h4><b>Consulta No. @Model.Consulta.Id</b></h4>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-header">
+        <div class="btn-actions-pane-right">
+            <div class="nav">
+                <a data-toggle="tab" href="#tab1-eg2-0"
+                   class="btn-pill btn-wide mr-1 ml-1 active btn btn-outline-alternate btn-sm">Datos del paciente</a>
+                <a data-toggle="tab" href="#tab1-eg2-1"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">General</a>
+                <a data-toggle="tab" href="#tab1-eg2-2"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Dental</a>
+                <a data-toggle="tab" href="#tab1-eg2-3"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Médico</a>
+                <a data-toggle="tab" href="#tab1-eg2-4"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Pediátricos</a>
+                <a data-toggle="tab" href="#tab1-eg2-5"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Ginecológicos</a>
+                <a data-toggle="tab" href="#tab1-eg2-6"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Neurológicos</a>
+                <a data-toggle="tab" href="#tab1-eg2-7"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Patológico</a>
+                <a data-toggle="tab" href="#tab1-eg2-8"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Nutricional</a>
+                <a data-toggle="tab" href="#tab1-eg2-9"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Estético</a>
+                <a data-toggle="tab" href="#tab1-eg2-10"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Rev. por sistemas</a>
+                <a data-toggle="tab" href="#tab1-eg2-11"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Área terapéutica</a>
+                <a data-toggle="tab" href="#tab1-eg2-12"
+                   class="btn-pill btn-wide mr-1 ml-1 btn btn-outline-alternate btn-sm">Prescripción</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1-eg2-0" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Datos personales</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <b>Nombre: </b>@Model.Consulta.Citas.Paciente.Nombre<br />
+                        <b>NIT: </b>@Model.Consulta.Citas.Paciente.Nit<br />
+                        <b>Dirección: </b>@Model.Consulta.Citas.Paciente.Direccion<br />
+                        <b>Alias: </b>@Model.Consulta.Citas.Paciente.Alias<br />
+                        <b>Sexo: </b>@Model.Consulta.Citas.Paciente.Sexo.DescripcionSexo<br />
+                        <b>Fecha de nacimiento: </b>@Model.Consulta.Citas.Paciente.FechaNacimiento<br />
+                        <b>Edad: </b>@Model.Consulta.Citas.Paciente.Edad<br />
+                        <b>Teléfono: </b>@Model.Consulta.Citas.Paciente.Telefono<br />
+                        <b>Celular: </b>@Model.Consulta.Citas.Paciente.Celular
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Antecedentes</b></h5>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <b>Antecedentes médicos: </b>@Model.Consulta.Citas.Paciente.AntecedentesMedicos<br />
+                        <b>Antecedentes quirúrgicos: </b>@Model.Consulta.Citas.Paciente.AntecedentesQuirurgicos <br />
+                        <b>Antecedentes traumáticos: </b>@Model.Consulta.Citas.Paciente.AntecedentesTraumaticos<br />
+                        <b>Alergias: </b>@Model.Consulta.Citas.Paciente.AntecedentesAlergias<br />
+                        <b>Vicios: </b>@Model.Consulta.Citas.Paciente.AntecedentesVicios<br />
+                        <b>Medicamentos: </b>@Model.Consulta.Citas.Paciente.AntecedentesMedicamentos
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <a asp-controller="Pacientes" asp-action="Modificar" asp-route-id="@Model.Consulta.Citas.PacienteId"
+                           class="btn btn-primary text-white">
+                            Editar datos del paciente&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-edit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-1" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Información de consulta</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Especialidad</label>
+                            @Html.TextBoxFor(a => a.Consulta.Citas.EspecialidadText, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Servicio</label>
+                            @Html.TextBoxFor(a => a.Consulta.Citas.ServicioText, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Médico</label>
+                            @Html.TextBoxFor(a => a.Consulta.Citas.EmpleadoText, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Motivo</label>
+                            @Html.TextAreaFor(a => a.Consulta.Citas.Motivo, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label for="exampleEmail11" class="">Costo de consulta</label>
+                            @Html.TextBoxFor(a => a.Consulta.CostoConsulta, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Estado de pago</label>
+                            @Html.TextBoxFor(m => m.Consulta.EstadoPagoConsulta.Estado,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de creación de consulta</label>
+                            <input class="form-control" asp-for="Consulta.FechaYHoraInicioConsulta" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de próxima consulta</label>
+                            <input class="form-control" asp-for="Consulta.FechaProximaConsulta" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label>Fecha de su última radiografía/TAC/Resonancia magnética</label>
+                            @Html.TextBoxFor(a => a.Consulta.FechaUltimaRadiografiaDental,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Tipo de consulta</label>
+                        @Html.TextBoxFor(m => m.Consulta.TipoConsulta, new { @class = "form-control", @readonly = true })
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Tipo de referencia</label>
+                        @Html.TextBoxFor(m => m.Consulta.TipoReferencia, new { @class = "form-control", @readonly = true })
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Medico Referido</label>
+                        @Html.TextBoxFor(m => m.Consulta.MedicoReferido, new { @class = "form-control", @readonly = true })
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Anotaciones u Observaciones</label>
+                        @Html.TextAreaFor(m => m.Consulta.ObservacionesAdicionales, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Servicios</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <div class="table-responsive">
+                            <table class='table table-hover' id="tabla-servicios">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Diente</th>
+                                        <th>Nombre servicio</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contenido-servicios">
+                                    @foreach (var servicio in Model.Consulta.ConsultasServicios)
+                                    {
+                                        <tr>
+                                            <td>@servicio.Servicio.Id</td>
+                                            <td>@servicio.NumeroDiente</td>
+                                            <td>@servicio.Servicio.NombreServicio</td>
+                                            <td>@servicio.Servicio.Precio</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Solo para mujeres</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-4">
+                        ¿Está usted embarazada?<br>
+                        @switch (Model.Consulta.EstaEmbarazada)
+                        {
+                            case "si":
+                                <span><b>Sí</b></span>
+                                break;
+                            case "no":
+                                <span><b>No</b></span>
+                                break;
+                            case "ns":
+                                <span><b>N/S</b></span>
+                                break;
+                            default:
+                                <span><b>-</b></span>
+                                break;
+                        }
+                        <br>
+                        Número de semanas<br>
+                        @Html.TextBoxFor(a => a.Consulta.NumeroSemanasEmbarazo, new
+                        {
+                        @class = "form-control",
+                        @readonly = true
+                        })
+                    </div>
+                    <div class="col-md-4">
+                        ¿Está usted tomando píldoras anticonceptivas o de sustitución hormonal?<br>
+                        @switch (Model.Consulta.TomaPildorasAnticonceptivas)
+                        {
+                            case "si":
+                                <span><b>Sí</b></span>
+                                break;
+                            case "no":
+                                <span><b>No</b></span>
+                                break;
+                            case "ns":
+                                <span><b>N/S</b></span>
+                                break;
+                            default:
+                                <span><b>-</b></span>
+                                break;
+                        }
+                    </div>
+                    <div class="col-md-4">
+                        ¿Está usted amamantando?<br>
+                        @switch (Model.Consulta.EstaAmamantando)
+                        {
+                            case "si":
+                                <span><b>Sí</b></span>
+                                break;
+                            case "no":
+                                <span><b>No</b></span>
+                                break;
+                            case "ns":
+                                <span><b>N/S</b></span>
+                                break;
+                            default:
+                                <span><b>-</b></span>
+                                break;
+                        }
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Bebidas alcohólicas</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                ¿Bebe bebidas alcohólicas?<br />
+                                @switch (Model.Consulta.BebeBebidasAlcoholicas)
+                                {
+                                    case "si":
+                                        <span><b>Sí</b></span>
+                                        break;
+                                    case "no":
+                                        <span><b>No</b></span>
+                                        break;
+                                    case "ns":
+                                        <span><b>N/S</b></span>
+                                        break;
+                                    default:
+                                        <span><b>-</b></span>
+                                        break;
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                Si es así, ¿cuánto alcohol bebió en las últimas 24 horas?<br>
+                                @Html.TextBoxFor(a => a.Consulta.AlcoholUltimas24Horas,
+                                new { @class = "form-control", @readonly = true })
+                            </div>
+                            <div class="col-md-4">
+                                Si es así, ¿cuánto bebe por lo general en una semana?<br>
+                                @Html.TextBoxFor(a => a.Consulta.AlcoholSemanal,
+                                new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-2" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Mapa dental</b></h5><br>
+                        Seleccione el diente que desea examinar
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <center>
+                            <table style="font-weight: bolder;">
+                                <tr>
+                                    <td><center>1</center></td>
+                                    <td><center>2</center></td>
+                                    <td><center>3</center></td>
+                                    <td><center>4</center></td>
+                                    <td><center>5</center></td>
+                                    <td><center>6</center></td>
+                                    <td><center>7</center></td>
+                                    <td><center>8</center></td>
+                                    <td><center>9</center></td>
+                                    <td><center>10</center></td>
+                                    <td><center>11</center></td>
+                                    <td><center>12</center></td>
+                                    <td><center>13</center></td>
+                                    <td><center>14</center></td>
+                                    <td><center>15</center></td>
+                                    <td><center>16</center></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d1.jpg" alt="1" height="90"
+                                             onclick="hideD();showD1()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d2.jpg" alt="2" height="90"
+                                             onclick="hideD();showD2()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d3.jpg" alt="3" height="90"
+                                             onclick="hideD();showD3()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d4.jpg" alt="4" height="90"
+                                             onclick="hideD();showD4()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d5.png" alt="5" height="90"
+                                             onclick="hideD();showD5()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d6.png" alt="6" height="90"
+                                             onclick="hideD();showD6()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d7.png" alt="7" height="90"
+                                             onclick="hideD();showD7()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d8.png" alt="8" height="90"
+                                             onclick="hideD();showD8()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d9.png" alt="9" height="90"
+                                             onclick="hideD();showD9()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d10.png" alt="10" height="90"
+                                             onclick="hideD();showD10()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d11.png" alt="11" height="90"
+                                             onclick="hideD();showD11()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d12.png" alt="12" height="90"
+                                             onclick="hideD();showD12()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d13.png" alt="13" height="90"
+                                             onclick="hideD();showD13()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d14.png" alt="14" height="90"
+                                             onclick="hideD();showD14()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d15.png" alt="15" height="90"
+                                             onclick="hideD();showD15()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d16.png" alt="16" height="90"
+                                             onclick="hideD();showD16()" style="cursor:pointer">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d32.png" alt="32" height="90"
+                                             onclick="hideD();showD32()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d31.png" alt="31" height="90"
+                                             onclick="hideD();showD31()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d30.png" alt="30" height="90"
+                                             onclick="hideD();showD30()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d29.png" alt="29" height="90"
+                                             onclick="hideD();showD29()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d28.png" alt="28" height="90"
+                                             onclick="hideD();showD28()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d27.png" alt="27" height="90"
+                                             onclick="hideD();showD27()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d26.png" alt="26" height="90"
+                                             onclick="hideD();showD26()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d25.png" alt="25" height="90"
+                                             onclick="hideD();showD25()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d24.png" alt="24" height="90"
+                                             onclick="hideD();showD24()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d23.png" alt="23" height="90"
+                                             onclick="hideD();showD23()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d22.png" alt="22" height="90"
+                                             onclick="hideD();showD22()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d21.png" alt="21" height="90"
+                                             onclick="hideD();showD21()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d20.png" alt="20" height="90"
+                                             onclick="hideD();showD20()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d19.png" alt="19" height="90"
+                                             onclick="hideD();showD19()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d18.png" alt="18" height="90"
+                                             onclick="hideD();showD18()" style="cursor:pointer">
+                                    </td>
+                                    <td>
+                                        <img src="~/Images/mapa_dental/d17.png" alt="17" height="90"
+                                             onclick="hideD();showD17()" style="cursor:pointer">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><center>32</center></td>
+                                    <td><center>31</center></td>
+                                    <td><center>30</center></td>
+                                    <td><center>29</center></td>
+                                    <td><center>28</center></td>
+                                    <td><center>27</center></td>
+                                    <td><center>26</center></td>
+                                    <td><center>25</center></td>
+                                    <td><center>24</center></td>
+                                    <td><center>23</center></td>
+                                    <td><center>22</center></td>
+                                    <td><center>21</center></td>
+                                    <td><center>20</center></td>
+                                    <td><center>19</center></td>
+                                    <td><center>18</center></td>
+                                    <td><center>17</center></td>
+                                </tr>
+                            </table>
+                        </center>
+                        <br><br>
+                    </div>
+                    @foreach (var item in Model.Consulta.ConsultasCaracteristicasDentales)
+                    {
+                        <div class="form-row col-md-12" id="servicios-diente-@item.NumeroDiente" style="display:none">
+                            <div class="col-md-12">
+                                <h5><b>Servicios diente No. @item.NumeroDiente</b></h5>
+                                <hr>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class='table table-hover'>
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Nombre servicio</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var servicio in Model.Consulta.ConsultasServicios)
+                                            {
+                                                @if (servicio.NumeroDiente == item.NumeroDiente)
+                                                {
+                                                    <tr>
+                                                        <td>@servicio.Servicio.Id</td>
+                                                        <td>@servicio.Servicio.NombreServicio</td>
+                                                        <td>@servicio.Servicio.Precio</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br /><br />
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0 form-row" id="caracteristicas-diente-@item.NumeroDiente" style="display:none">
+                            <div class="col-md-2" style="padding:5px">
+                                <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray; gray;border-radius:10px">
+                                    <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                        <center><b>PERCUSIONES</b></center>
+                                    </div>
+                                    <div class="p-2">
+                                        Diente No. <span><b>@item.NumeroDiente</b></span><br>
+                                        @if (item.Percusiones_VerticalMas)
+                                        {
+                                            <span><b>Vertical +</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Percusiones_HorizontalMas)
+                                        {
+                                            <span><b>Horizontal +</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Percusiones_VerticalMenos)
+                                        {
+                                            <span><b>Vertical -</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Percusiones_HorizontalMenos)
+                                        {
+                                            <span><b>Horizontal -</b></span>
+                                        }
+                                        @if (!item.Percusiones_VerticalMas
+                                       && !item.Percusiones_HorizontalMas
+                                       && !item.Percusiones_VerticalMenos
+                                       && !item.Percusiones_HorizontalMenos)
+                                        {
+                                            <span><i>Ninguna</i></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding:5px">
+                                <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray;border-radius:10px">
+                                    <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                        <center><b>DOLOR</b></center>
+                                    </div>
+                                    <div class="p-2">
+                                        Diente No. <span><b>@item.NumeroDiente</b></span><br>
+                                        @if (item.Dolor_Localizado)
+                                        {
+                                            <span><b>Localizada</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Dolor_Fugaz)
+                                        {
+                                            <span><b>Fugaz</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Dolor_Persistente)
+                                        {
+                                            <span><b>Persistente</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Dolor_Referido)
+                                        {
+                                            <span><b>Referido</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Dolor_Espontaneo)
+                                        {
+                                            <span><b>Espontáneo</b></span>
+                                        }
+                                        @if (!item.Dolor_Localizado
+                                       && !item.Dolor_Fugaz
+                                       && !item.Dolor_Persistente
+                                       && !item.Dolor_Referido
+                                       && !item.Dolor_Espontaneo)
+                                        {
+                                            <span><i>Ninguna</i></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding:5px">
+                                <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray;border-radius:10px">
+                                    <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                        <center><b>ESTÍMULO</b></center>
+                                    </div>
+                                    <div class="p-2">
+                                        Diente No. <span><b>@item.NumeroDiente</b></span><br>
+                                        @if (item.Estimulo_Frio)
+                                        {
+                                            <span><b>Frío</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Estimulo_Calor)
+                                        {
+                                            <span><b>Calor</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Estimulo_DulceAcido)
+                                        {
+                                            <span><b>Dulce/Ácido</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Estimulo_Masticacion)
+                                        {
+                                            <span><b>Masticación</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Estimulo_Otro)
+                                        {
+                                            <span><b>Otro</b></span>
+                                        }
+                                        @if (!item.Estimulo_Frio
+                                       && !item.Estimulo_Calor
+                                       && !item.Estimulo_DulceAcido
+                                       && !item.Estimulo_Masticacion
+                                       && !item.Estimulo_Otro)
+                                        {
+                                            <span><i>Ninguna</i></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding:5px">
+                                <div class="col-md-12 p-0" style="box-shadow:1px 1px 5px 0px lightgray;border-radius:10px">
+                                    <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                        <center><b>TÉRMICA AL FRÍO</b></center>
+                                    </div>
+                                    <div class="p-2">
+                                        Diente No. <span><b>@item.NumeroDiente</b></span><br>
+                                        @if (item.TermicaFrio_Positiva)
+                                        {
+                                            <span><b>Positiva</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Negativa)
+                                        {
+                                            <span><b>Negativa</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Localizada)
+                                        {
+                                            <span><b>Localizada</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Fugaz)
+                                        {
+                                            <span><b>Fugaz</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Incrementa)
+                                        {
+                                            <span><b>Incrementa</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Referida)
+                                        {
+                                            <span><b>Referida</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Irradiado)
+                                        {
+                                            <span><b>Irradiado</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Persistente)
+                                        {
+                                            <span><b>Persistente</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaFrio_Decrece)
+                                        {
+                                            <span><b>Decrece</b></span>
+                                        }
+                                        @if (!item.TermicaFrio_Positiva
+                                       && !item.TermicaFrio_Negativa
+                                       && !item.TermicaFrio_Localizada
+                                       && !item.TermicaFrio_Fugaz
+                                       && !item.TermicaFrio_Incrementa
+                                       && !item.TermicaFrio_Referida
+                                       && !item.TermicaFrio_Irradiado
+                                       && !item.TermicaFrio_Persistente
+                                       && !item.TermicaFrio_Decrece)
+                                        {
+                                            <span><i>Ninguna</i></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding:5px">
+                                <div class="col-md-12 p-0" style="box-shadow: 1px 1px 5px 0px lightgray;border-radius:10px">
+                                    <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                        <center><b>TÉRMICA AL CALOR</b></center>
+                                    </div>
+                                    <div class="p-2">
+                                        Diente No. <span><b>@item.NumeroDiente</b></span><br>
+                                        @if (item.TermicaCalor_Positiva)
+                                        {
+                                            <span><b>Positiva</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Negativa)
+                                        {
+                                            <span><b>Negativa</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Localizada)
+                                        {
+                                            <span><b>Localizada</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Fugaz)
+                                        {
+                                            <span><b>Fugaz</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Incrementa)
+                                        {
+                                            <span><b>Incrementa</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Referida)
+                                        {
+                                            <span><b>Referida</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Irradiado)
+                                        {
+                                            <span><b>Irradiado</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Persistente)
+                                        {
+                                            <span><b>Persistente</b></span>
+                                            <br />
+                                        }
+                                        @if (item.TermicaCalor_Decrece)
+                                        {
+                                            <span><b>Decrece</b></span>
+                                        }
+                                        @if (!item.TermicaCalor_Positiva
+                                       && !item.TermicaCalor_Negativa
+                                       && !item.TermicaCalor_Localizada
+                                       && !item.TermicaCalor_Fugaz
+                                       && !item.TermicaCalor_Incrementa
+                                       && !item.TermicaCalor_Referida
+                                       && !item.TermicaCalor_Irradiado
+                                       && !item.TermicaCalor_Persistente
+                                       && !item.TermicaCalor_Decrece)
+                                        {
+                                            <span><i>Ninguna</i></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding: 5px">
+                                <div class="col-md-12 p-0" style="box-shadow: 1px 1px 5px 0px lightgray;border-radius:10px">
+                                    <div class="col-md-12 p-2" style="background-color: lightgray;border-top-left-radius:10px;border-top-right-radius:10px">
+                                        <center><b>DIAGNÓSTICO</b></center>
+                                    </div>
+                                    <div class="p-2">
+                                        Diente No. <span><b>@item.NumeroDiente</b></span><br>
+                                        @if (item.Diagnostico_ManchaBlanca)
+                                        {
+                                            <span><b>Mancha blanca</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Caries)
+                                        {
+                                            <span><b>Caries</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Traumatismo)
+                                        {
+                                            <span><b>Traumatismo</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Abfraccion)
+                                        {
+                                            <span><b>Abfracción</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Atricion)
+                                        {
+                                            <span><b>Atrición</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Erosion)
+                                        {
+                                            <span><b>Erosión</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Restauracion)
+                                        {
+                                            <span><b>Restauración</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Ajustada)
+                                        {
+                                            <span><b>Ajustada</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_Desajustada)
+                                        {
+                                            <span><b>Desajustada</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_PulpaSana)
+                                        {
+                                            <span><b>Pulpa sana</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_PulpitisReversible)
+                                        {
+                                            <span><b>Pulpitis reversible</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_PulpitisIrreversible)
+                                        {
+                                            <span><b>Pulpitis irreversible</b></span>
+                                            <br />
+                                        }
+                                        @if (item.Diagnostico_NecrosisPulpar)
+                                        {
+                                            <span><b>Necrosis pulpar</b></span>
+                                        }
+                                        @if (!item.Diagnostico_ManchaBlanca
+                                       && !item.Diagnostico_Caries
+                                       && !item.Diagnostico_Traumatismo
+                                       && !item.Diagnostico_Abfraccion
+                                       && !item.Diagnostico_Atricion
+                                       && !item.Diagnostico_Erosion
+                                       && !item.Diagnostico_Restauracion
+                                       && !item.Diagnostico_Ajustada
+                                       && !item.Diagnostico_Desajustada
+                                       && !item.Diagnostico_PulpaSana
+                                       && !item.Diagnostico_PulpitisReversible
+                                       && !item.Diagnostico_PulpitisIrreversible)
+                                        {
+                                            <span><i>Ninguna</i></span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-3" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Historia clínica</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
+                        <b>Historia del problema</b><br />
+                        @Html.TextAreaFor(m => m.Consulta.Historia.HistoriaProblema, new { @readonly = true, @class = "form-control" })
+                    </div>
+                    <div class="col-md-12">
+                        <b>Síntomas</b><br />
+                        @Html.TextAreaFor(m => m.Consulta.Historia.Sintomas, new { @readonly = true, @class = "form-control" })
+                    </div>
+                    <div class="col-md-12">
+                        <b>Diagnóstico</b><br />
+                        @Html.TextAreaFor(m => m.Consulta.Historia.Diagnostico, new { @readonly = true, @class = "form-control" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Examen físico</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.Temperatura)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.Temperatura,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.FrecuenciaRespiratoria)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.FrecuenciaRespiratoria,
+                            new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.FrecuenciaCardiaca)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.FrecuenciaCardiaca,
+                            new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.SaturacionDeOxigeno)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.SaturacionDeOxigeno,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.PresionArterialBrazoDerecho)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.PresionArterialBrazoDerecho, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.PresionArterialBrazoIzquierdo)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.PresionArterialBrazoIzquierdo, new
+                            {
+                            @class = "form-control",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.Peso)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.Peso,
+                            new
+                            {
+                            @class = "form-control",
+                            @onchange = "getIMC()",
+                            @onkeyup = "getIMC()",
+                            @readonly = true
+                            })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.Talla)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.Talla,
+                            new { @class = "form-control", @onchange = "getIMC()" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.IMC)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.IMC,
+                            new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.Glucosa)
+                            @Html.TextBoxFor(m => m.Consulta.ExamenFisico.Glucosa,
+                            new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            @Html.LabelFor(m => m.Consulta.ExamenFisico.Observaciones)
+                            @Html.TextAreaFor(m => m.Consulta.ExamenFisico.Observaciones, 2, 500,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                    <a asp-controller="Consultas"
+                       asp-action="ModificarExamenFisico"
+                       asp-route-consultaId="@Model.Consulta.Id"
+                       class="btn btn-primary text-white">
+                        Editar <i class="fas fa-edit"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-4" role="tabpanel">
+                Pediátricos
+            </div>
+            <div class="tab-pane" id="tab1-eg2-5" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Examen ginecológico</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            Examen ginecológico<br />
+                            @Html.TextAreaFor(m => m.Consulta.ExamenGinecologico,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-6" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Examen neurológico</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            Examen neurológico<br />
+                            @Html.TextAreaFor(m => m.Consulta.ExamenNeurologico,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-7" role="tabpanel">
+                Patológico
+            </div>
+            <div class="tab-pane" id="tab1-eg2-8" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Seguimiento nutricional</b></h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="table-responsive">
+                        <table class="mb-0 table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Peso</th>
+                                    <th>IMC</th>
+                                    <th>PGC</th>
+                                    <th>Cuello</th>
+                                    <th>Busto</th>
+                                    <th>Cintura/Abdomen</th>
+                                    <th>Cadera</th>
+                                    <th>Muslo</th>
+                                    <th>Brazo</th>
+                                    <th>Muñeca</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var seguimiento in Model.Consulta.Citas.Paciente.PacientesSeguimientosNutricionales)
+                                {
+                                    <tr>
+                                        <td>@seguimiento.FechaText</td>
+                                        <td>@seguimiento.Peso</td>
+                                        <td>@seguimiento.IMC</td>
+                                        <td>@seguimiento.PGC</td>
+                                        <td>@seguimiento.Cuello</td>
+                                        <td>@seguimiento.Busto</td>
+                                        <td>@seguimiento.CinturaAbdomen</td>
+                                        <td>@seguimiento.Cadera</td>
+                                        <td>@seguimiento.Muslo</td>
+                                        <td>@seguimiento.Brazo</td>
+                                        <td>@seguimiento.Muñeca</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table><br><br>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-9" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h5><b>Estética</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Metabolismo</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_Metabolismo, new { @class = "form-control", @placeholder = "Metabolismo" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Grasa</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_Grasa, new { @class = "form-control", @placeholder = "Grasa" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>IMC</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_IMC, new { @class = "form-control", @placeholder = "IMC", @readonly = "true" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Agua</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_Agua, new { @class = "form-control", @placeholder = "Agua" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Obesidad</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_Obesidad, new { @class = "form-control", @placeholder = "Obesidad" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contorno de brazos</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_ContornoBrazos, new { @class = "form-control", @placeholder = "Contorno de brazos" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contorno de busto</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_ContornoBusto, new { @class = "form-control", @placeholder = "Contorno de busto" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contorno de abdomen</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_ContornoAbdomen, new { @class = "form-control", @placeholder = "Contorno de abdomen" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contorno de cadera</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_ContornoCadera, new { @class = "form-control", @placeholder = "Contorno de cadera" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Contorno de piernas</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_ContornoPiernas, new { @class = "form-control", @placeholder = "Contorno de piernas" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Estatura</label>
+                        @Html.TextBoxFor(m => m.Consulta.Estetico_Estatura, new
+                        {
+                        @class = "form-control",
+                        @placeholder = "Estatura",
+                        @onchange = "actualizarVista()",
+                        @onkeyup = "actualizarVista()"
+                        })
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-10" role="tabpanel">
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Sistema cardiopulmonar</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            Sistema cardiopulmonar<br />
+                            @Html.TextAreaFor(m => m.Consulta.SistemaCardiopulmonar,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Sistema osteoarticular</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            Sistema osteoarticular<br />
+                            @Html.TextAreaFor(m => m.Consulta.SistemaOsteoarticular,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-row">
+                    <div class="col-12">
+                        <h5><b>Sistema hematológico</b></h5>
+                        <hr>
+                    </div>
+                    <div class="col-12">
+                        <div class="position-relative form-group">
+                            Sistema hematológico<br />
+                            @Html.TextAreaFor(m => m.Consulta.SistemaHematologico,
+                            new { @class = "form-control", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-11" role="tabpanel">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5><b>Área terapéutica</b></h5>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
+                                <label>Datos generales</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoDatosGenerales, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>Actividades diarias (horarios, rutinas)</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoActividadesDiarias, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>¿Con quién vive?</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoConQuienVive, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>Hábitos alimenticios (horarios, quién cocina, super)</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoHabitosAlimenticios, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>Ejercicio (deporte)</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoEjercicio, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>Fines de semana</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoFinesSemana, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>Historia médica</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoHistoriaMedica, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                            <div class="col-md-12">
+                                <label>Historia con el peso</label>
+                                @Html.TextAreaFor(m=>m.Consulta.TerapeuticoHistoriaPeso, new{@class="form-control"
+                                ,@readonly=true})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab1-eg2-12" role="tabpanel">
+                @Html.HiddenFor(m => m.Consulta.Id)
+                @Html.HiddenFor(m => m.Consulta.Citas.Paciente.Nombre)
+                @Html.HiddenFor(m => m.Consulta.Citas.Paciente.Edad)
+                @Html.HiddenFor(m => m.Consulta.Citas.Paciente.Direccion)
+
+
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <label class="font-weight-bold">Medicamento</label>
+                        <div class="form-group">
+                            <input type="text" name="productname" id="productname" class="form-control" placeholder="Ingrese Medicamento..." />
+                        </div>
+                        <label class="font-weight-bold">Cantidad</label>
+                        <div class="form-group">
+                            <input type="text" id="productqty" class="form-control" placeholder="Ingrese Cantidad..." />
+                        </div>
+                        <label class="font-weight-bold">Indicaciones</label>
+                        <div class="form-group">
+                            <textarea type="text" id="productin" class="form-control" placeholder="Ingrese Indicaciones..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-end">
+                    <div class="col-1">
+                        <a onclick="addprescription()" class="btn btn-primary btn-lg text-white">Agregar <i class="fas fa-plus-circle"></i></a><br>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="mb-0 table" name="Prescriptions">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Medicamento</th>
+                                        <th>Cantidad</th>
+                                        <th>Indicaciones</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Prescriptions">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-row justify-content-end">
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-success btn-lg text-white" id="generateprespdf" onclick="savePrescription()" disabled>Generar PDF ß &nbsp<i class="fas fa-arrow-down"></i></button><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <a asp-controller="Consultas" asp-action="EditarConsulta" asp-route-id="@Model.Consulta.Id"
+           class="btn btn-primary text-white">
+            <i class="fas fa-edit"></i> Editar consulta
+        </a>
+    </div>
+</div>
+
+@section Scripts{
+<script src="~/js/infoconsulta.js"></script>
+<script src="~/js/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    function hideD() {
+        $("#caracteristicas-diente-1").hide();
+        $("#caracteristicas-diente-2").hide();
+        $("#caracteristicas-diente-3").hide();
+        $("#caracteristicas-diente-4").hide();
+        $("#caracteristicas-diente-5").hide();
+        $("#caracteristicas-diente-6").hide();
+        $("#caracteristicas-diente-7").hide();
+        $("#caracteristicas-diente-8").hide();
+        $("#caracteristicas-diente-9").hide();
+        $("#caracteristicas-diente-10").hide();
+        $("#caracteristicas-diente-11").hide();
+        $("#caracteristicas-diente-12").hide();
+        $("#caracteristicas-diente-13").hide();
+        $("#caracteristicas-diente-14").hide();
+        $("#caracteristicas-diente-15").hide();
+        $("#caracteristicas-diente-16").hide();
+        $("#caracteristicas-diente-17").hide();
+        $("#caracteristicas-diente-18").hide();
+        $("#caracteristicas-diente-19").hide();
+        $("#caracteristicas-diente-20").hide();
+        $("#caracteristicas-diente-21").hide();
+        $("#caracteristicas-diente-22").hide();
+        $("#caracteristicas-diente-23").hide();
+        $("#caracteristicas-diente-24").hide();
+        $("#caracteristicas-diente-25").hide();
+        $("#caracteristicas-diente-26").hide();
+        $("#caracteristicas-diente-27").hide();
+        $("#caracteristicas-diente-28").hide();
+        $("#caracteristicas-diente-29").hide();
+        $("#caracteristicas-diente-30").hide();
+        $("#caracteristicas-diente-31").hide();
+        $("#caracteristicas-diente-32").hide();
+        $("#servicios-diente-1").hide();
+        $("#servicios-diente-2").hide();
+        $("#servicios-diente-3").hide();
+        $("#servicios-diente-4").hide();
+        $("#servicios-diente-5").hide();
+        $("#servicios-diente-6").hide();
+        $("#servicios-diente-7").hide();
+        $("#servicios-diente-8").hide();
+        $("#servicios-diente-9").hide();
+        $("#servicios-diente-10").hide();
+        $("#servicios-diente-11").hide();
+        $("#servicios-diente-12").hide();
+        $("#servicios-diente-13").hide();
+        $("#servicios-diente-14").hide();
+        $("#servicios-diente-15").hide();
+        $("#servicios-diente-16").hide();
+        $("#servicios-diente-17").hide();
+        $("#servicios-diente-18").hide();
+        $("#servicios-diente-19").hide();
+        $("#servicios-diente-20").hide();
+        $("#servicios-diente-21").hide();
+        $("#servicios-diente-22").hide();
+        $("#servicios-diente-23").hide();
+        $("#servicios-diente-24").hide();
+        $("#servicios-diente-25").hide();
+        $("#servicios-diente-26").hide();
+        $("#servicios-diente-27").hide();
+        $("#servicios-diente-28").hide();
+        $("#servicios-diente-29").hide();
+        $("#servicios-diente-30").hide();
+        $("#servicios-diente-31").hide();
+        $("#servicios-diente-32").hide();
+    };
+    function showD1() {
+        $("#caracteristicas-diente-1").show();
+        $("#servicios-diente-1").show();
+    };
+    function showD2() {
+        $("#caracteristicas-diente-2").show();
+        $("#servicios-diente-2").show();
+    };
+    function showD3() {
+        $("#caracteristicas-diente-3").show();
+        $("#servicios-diente-3").show();
+    };
+    function showD4() {
+        $("#caracteristicas-diente-4").show();
+        $("#servicios-diente-4").show();
+    };
+    function showD5() {
+        $("#caracteristicas-diente-5").show();
+        $("#servicios-diente-5").show();
+    };
+    function showD6() {
+        $("#caracteristicas-diente-6").show();
+        $("#servicios-diente-6").show();
+    };
+    function showD7() {
+        $("#caracteristicas-diente-7").show();
+        $("#servicios-diente-7").show();
+    };
+    function showD8() {
+        $("#caracteristicas-diente-8").show();
+        $("#servicios-diente-8").show();
+    };
+    function showD9() {
+        $("#caracteristicas-diente-9").show();
+        $("#servicios-diente-9").show();
+    };
+    function showD10() {
+        $("#caracteristicas-diente-10").show();
+        $("#servicios-diente-10").show();
+    };
+    function showD11() {
+        $("#caracteristicas-diente-11").show();
+        $("#servicios-diente-11").show();
+    };
+    function showD12() {
+        $("#caracteristicas-diente-12").show();
+        $("#servicios-diente-12").show();
+    };
+    function showD13() {
+        $("#caracteristicas-diente-13").show();
+        $("#servicios-diente-13").show();
+    };
+    function showD14() {
+        $("#caracteristicas-diente-14").show();
+        $("#servicios-diente-14").show();
+    };
+    function showD15() {
+        $("#caracteristicas-diente-15").show();
+        $("#servicios-diente-15").show();
+    };
+    function showD16() {
+        $("#caracteristicas-diente-16").show();
+        $("#servicios-diente-16").show();
+    };
+    function showD17() {
+        $("#caracteristicas-diente-17").show();
+        $("#servicios-diente-17").show();
+    };
+    function showD18() {
+        $("#caracteristicas-diente-18").show();
+        $("#servicios-diente-18").show();
+    };
+    function showD19() {
+        $("#caracteristicas-diente-19").show();
+        $("#servicios-diente-19").show();
+    };
+    function showD20() {
+        $("#caracteristicas-diente-20").show();
+        $("#servicios-diente-20").show();
+    };
+    function showD21() {
+        $("#caracteristicas-diente-21").show();
+        $("#servicios-diente-21").show();
+    };
+    function showD22() {
+        $("#caracteristicas-diente-22").show();
+        $("#servicios-diente-22").show();
+    };
+    function showD23() {
+        $("#caracteristicas-diente-23").show();
+        $("#servicios-diente-23").show();
+    };
+    function showD24() {
+        $("#caracteristicas-diente-24").show();
+        $("#servicios-diente-24").show();
+    };
+    function showD25() {
+        $("#caracteristicas-diente-25").show();
+        $("#servicios-diente-25").show();
+    };
+    function showD26() {
+        $("#caracteristicas-diente-26").show();
+        $("#servicios-diente-26").show();
+    };
+    function showD27() {
+        $("#caracteristicas-diente-27").show();
+        $("#servicios-diente-27").show();
+    };
+    function showD28() {
+        $("#caracteristicas-diente-28").show();
+        $("#servicios-diente-28").show();
+    };
+    function showD29() {
+        $("#caracteristicas-diente-29").show();
+        $("#servicios-diente-29").show();
+    };
+    function showD30() {
+        $("#caracteristicas-diente-30").show();
+        $("#servicios-diente-30").show();
+    };
+    function showD31() {
+        $("#caracteristicas-diente-31").show();
+        $("#servicios-diente-31").show();
+    };
+    function showD32() {
+        $("#caracteristicas-diente-32").show();
+        $("#servicios-diente-32").show();
+    };
+</script>
+    }

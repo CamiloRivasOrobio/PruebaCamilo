@@ -1,0 +1,77 @@
+@using Database.Shared.Models
+@model Paciente
+@{
+    Layout = "_HojaLayout";
+    DateTime fecha = DateTime.Now;
+}
+
+<div class="form-row">
+    <div class="col-md-12">
+        <center><img width="150" src="/assets/images/logo-redowl.jpeg" alt=""></center>
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        <center><h5>Expediente de paciente</h5></center>
+        <hr />
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        <center><b>Fecha y hora de emisión:</b> @fecha</center>
+        <hr />
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        <h6>Datos del paciente</h6>
+        <hr />
+    </div>
+    <div class="col-md-3">
+        <label><b>Nombre</b></label><br />
+        @Model.Nombre
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        <h6>Consultas</h6>
+        <hr />
+    </div>
+    @foreach (var item in Model.Citas)
+    {
+        if (item.Consultas != null)
+        {
+            var consulta = item.Consultas.FirstOrDefault();
+            <div class="col-md-12">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label><b>Fecha y hora de inicio</b></label><br>
+                        @consulta.FechaYHoraInicioConsulta
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+</div>
+<div class="form-row">
+    <div class="col-md-12">
+        <h6>Cambio de fases</h6>
+        <hr />
+    </div>
+    @if (Model.PacientesFasesTratamiento != null && Model.PacientesFasesTratamiento.Count > 0)
+    {
+        @foreach (var cambioFase in Model.PacientesFasesTratamiento)
+        {
+            <div class="col-md-12">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label><b>Fecha de inicio</b></label><br>
+                        @cambioFase.FechaInicioFase
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+</div>

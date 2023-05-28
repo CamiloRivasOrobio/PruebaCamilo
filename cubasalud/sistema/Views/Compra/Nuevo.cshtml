@@ -1,0 +1,60 @@
+@model sistema.Models.CompraBaseViewModel
+
+@{
+    ViewData["Title"] = "Nueva compra";
+}
+
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12 text-center">
+                <h4><b>Nueva compra</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_CompraForm")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-danger"
+                        data-bind="click:cancelarRegistroCompra">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-primary"
+                        data-bind="click:guardarComoPedido">
+                    Guardar como pedido
+                </button>
+                <button type="button" class="btn btn-primary"
+                        data-bind="click:guardarComoCompra">
+                    Guardar como compra
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
+<script src="~/js/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<script type="text/javascript" src="~/js/tempusdominus-bootstrap-4.min.js"></script>
+<script type="text/javascript" src="~/js/daterangepicker.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script type="text/javascript" src="~/js/moment.min.js"></script>
+<script type="text/javascript" src="~/ViewModelKo/CompraVM.js"></script>
+}
+
+@section css
+{
+<link href="~/css/daterangepicker.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+}

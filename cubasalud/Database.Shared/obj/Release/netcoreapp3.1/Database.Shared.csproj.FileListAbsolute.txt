@@ -1,0 +1,13 @@
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/bin/Release/netcoreapp3.1/Database.Shared.deps.json
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/bin/Release/netcoreapp3.1/Database.Shared.runtimeconfig.json
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/bin/Release/netcoreapp3.1/Database.Shared.runtimeconfig.dev.json
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/bin/Release/netcoreapp3.1/Database.Shared.dll
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/bin/Release/netcoreapp3.1/Database.Shared.pdb
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.csproj.AssemblyReference.cache
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.AssemblyInfoInputs.cache
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.AssemblyInfo.cs
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.csproj.CoreCompileInputs.cache
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.dll
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.pdb
+/home/ubuntu/labsclinicsemergencia/profam/cubasalud/Database.Shared/obj/Release/netcoreapp3.1/Database.Shared.genruntimeconfig.cache

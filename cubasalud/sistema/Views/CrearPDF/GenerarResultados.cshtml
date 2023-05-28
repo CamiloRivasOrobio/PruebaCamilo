@@ -1,0 +1,358 @@
+@* @model sistema.Models.facturaVentaViewModel *@
+@model Database.Shared.Models.Examen
+
+ @{
+    Layout = "_HojaLayout";
+
+    string paciente = "";
+    string nit = "";
+    string direccion = "";
+    int edad = 0;
+    var todayDate = DateTime.Now;
+
+    if(Model.Paciente.FechaNacimiento != null)
+    {
+        edad = todayDate.Year - Model.Paciente.FechaNacimiento.Value.Year;
+        if (todayDate.Month < Model.Paciente.FechaNacimiento.Value.Month || (todayDate.Month == Model.Paciente.FechaNacimiento.Value.Month && todayDate.Day < Model.Paciente.FechaNacimiento.Value.Day)) edad--;
+    }
+}
+
+
+<style>
+.logof{
+    @* text-align: left; *@
+    padding: 18px;
+}
+
+.printDetails > div {
+   display: inline-block;
+}
+
+.text-titulo{
+    position: absolute;
+    left: 29.2em;
+    top: 2em;
+}
+
+.text-titulo2{
+    position: absolute;
+    left: 39.8em;
+    top: 4em;
+}
+
+hr.linea{
+    border: none;
+    height: 2px;
+    color: #008f4c; /* old IE */
+    background-color: #008f4c; /* Modern Browsers */
+    width: 700px;
+    position: relative;
+    left: 2.5em;
+}
+
+hr.linea2 {
+    border: none;
+    height: 2px;
+    color: #008f4c; 
+    background-color:
+    width: 250px;
+}
+
+.info-owner{
+    margin-top: 15px;
+    text-align: center;
+    position: absolute;
+    left: 66em;
+    top: 0px;
+    width: 200px;
+    
+}
+
+.direccion-info{
+    position: absolute;
+    left: 29.5em;
+    top: 7em;
+    text-align: center;
+}
+@* 
+.tabla-resultados{
+    position: relative;
+    left: 5.5em;
+    margin-top: 1em;
+} *@
+
+.datos-encabezado{
+    margin-top: 1em;
+    margin-bottom: 1em;
+     position: relative;
+     left: 8.5em;
+}
+
+.codigo-paciente{
+    position: relative;
+    left: 25em;
+    top: -5.5em;
+}
+
+
+.primer-apartado{
+    position: fixed;
+    left: 3em;
+    @* top: 0em; *@
+}
+
+.segundo-apartado
+{
+    position: fixed;
+    left: 29em;
+}
+
+
+.tercer-apartado
+{
+    position: fixed;
+    left: 59em;
+}
+
+.lineazul{
+    position: relative;
+    top: 6em;
+}
+
+.table > :not(:first-child) {
+    @* border-bottom: 4px solid black !important; *@
+}
+
+</style>
+
+@* <div class="container-fluid" style="border: 3px solid #795f48; border-radius: 0.8em; min-height: 1500px;"> *@
+<div class="container-fluid">
+    <div class="encabezado">
+        <div class="row printDetails">
+            <div class="col-xs-2">
+                <div class="logof">
+                    <img src="~/assets/images/logo-redowl.jpeg" alt="" width="280">
+                </div>
+            </div>
+            <div class="" >
+                <div class="text-titulo" style="width: 100%;">
+                    <h4 style="font-weight: 600;">LABORATORIO CLÍNICO RED OWL </h4>
+                </div>
+                <div class="text-titulo2" style="width: 100%;">
+                    <h4 style="font-weight: 600;"></h4>
+                </div>
+                <div>
+                    @* <hr class="linea" style="border-bottom: 1px solid black;"> *@
+                </div>
+                <div class="info-owner">
+
+                    <div class="">
+                            <div style="text-align: left;">
+                                <span style="font-weight: 600; font-size: 1.2em;">NOMBRES: </span>
+                                <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; @(Model.Paciente == null ? "" : Model.Paciente.Nombre)</span>
+                            </div>
+                            @* @if(!string.IsNullOrEmpty(Model.Paciente.no_IGGS))
+                            {
+                                <div>
+                                    <span style="font-weight: 600; font-size: 1.2em;">NUM. AFIL.: </span>
+                                    <span style="font-size: 1.2em;">@(Model.Paciente == null ? "" : Model.Paciente.no_IGGS)</span>
+                                </div>
+                            } *@
+                            <br>
+                             <div style="text-align: left;">
+                                <span style="font-weight: 600; font-size: 1.2em;">Reg. Med: </span>
+                                <span style="font-size: 1.2em;"> &nbsp; &nbsp; &nbsp; --- </span>
+                            </div>
+                        
+                            <div style="text-align: left;">
+                                <span style="font-weight: 600; font-size: 1.2em;">Género: </span>
+                                <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; @(Model.Paciente == null ? "" : Model.Paciente.Sexo.DescripcionSexo)</span>
+                            </div>
+                            @* <div>
+                                <span style="font-weight: 600; font-size: 1.2em;">MEDICO: </span>
+                                <span style="font-size: 1.2em;">@(Model.Medicos == null ? "// sin referencia" : Model.Medicos.Nombres)</span>
+                            </div> *@
+                            <div style="text-align: left;">
+                                <span style="font-weight: 600; font-size: 1.2em;">Edad: </span>
+                                <span style="font-size: 1.2em;">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;@edad</span>
+                            </div>
+                            @* <div style="width: 160px;" class="codigo-paciente">
+                                <div style="border-style:dashed; ">
+                                    <span style="font-weight: 600;">Código Paciente</span>
+                                </div>
+                                <div class="text-center" style="border-style:dashed;">
+                                    <span  style="color: red; font-weight: 600;">@(Model.Paciente == null ? "" : Model.Paciente.Id.ToString())</span>
+                                </div>
+                            </div> *@
+                        </div>
+
+
+                </div>
+                <div class="direccion-info">
+                    <h5>GUATEMALA , CAPITAL</h5>
+                    <h5>Teléfonos: 0000 0000 / 0000 0000 / 0000 0000</h5>
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="infof">
+            @* <div style="width: 410px; float: left;">
+                 <h6>
+                    <span style="font-weight: 600;">PACIENTE:</span> 
+                        @(Model.Paciente == null ? "" : Model.Paciente.Nombre)
+                </h6>
+                 <h6>
+                    <span style="font-weight: 600;">Código paciente:</span> 
+                        @Model.PacienteId
+                </h6>
+                <h6> 
+                    <span style="font-weight: 600;">MEDICO:</span> 
+                        @(Model.Medicos == null ? "// sin referencia" : Model.Medicos.Nombres)
+                </h6>
+            </div> *@
+        </div>
+    </div>
+    <br><br><br>
+    <div style="border-bottom: #50c96b 6px solid;">
+        <h4 class="text-center informe-resultados" style="font-weight: 700; ">Informe de Resultados de Laboratorio</h4>
+    </div>
+
+    <div>
+        <div style="margin-top: 2em;" class="primer-apartado">
+            <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">No. Orden: </span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; - - -</span>
+                </div>
+
+                <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">Médico: </span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; @(Model.Medicos == null ? "// sin referencia" : Model.Medicos.Nombres)</span>
+                </div>
+
+                <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">Servicio: </span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; - - -</span>
+                </div>
+
+            </div>
+
+
+            <div style="margin-top: 2em;" class="segundo-apartado">
+            <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">Recepcion:</span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; @Model.FechaRealizacion.ToString("dd/MM/yyyy")</span>
+                </div>
+
+                <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">Habitación: </span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; - - -</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 2em;" class="tercer-apartado">
+            <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">Impresión:</span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; @DateTime.Now.ToString("dd/MM/yyyy")</span>
+                </div>
+
+                <div style="text-align: left;">
+                    <span style="font-weight: 600; font-size: 1.2em;">Imprimió: </span>
+                    <span style="font-size: 1.2em;"> &nbsp;&nbsp;&nbsp; - - -</span>
+                </div>
+            </div>
+    </div>
+    <br>
+    <div style="border-bottom: #48a4ff 6px solid;" class="lineazul"></div>
+
+    @* <div class="datos-encabezado">
+        <div>
+            <span style="font-weight: 600; font-size: 1.2em;">PACIENTE: </span>
+            <span style="font-size: 1.2em;">@(Model.Paciente == null ? "" : Model.Paciente.Nombre)</span>
+        </div>
+        @if(!string.IsNullOrEmpty(Model.Paciente.no_IGGS))
+        {
+            <div>
+                <span style="font-weight: 600; font-size: 1.2em;">NUM. AFIL.: </span>
+                <span style="font-size: 1.2em;">@(Model.Paciente == null ? "" : Model.Paciente.no_IGGS)</span>
+            </div>
+        }
+       
+        <div>
+            <span style="font-weight: 600; font-size: 1.2em;">SEXO: </span>
+            <span style="font-size: 1.2em;">@(Model.Paciente == null ? "" : Model.Paciente.Sexo.DescripcionSexo)</span>
+        </div>
+         <div>
+            <span style="font-weight: 600; font-size: 1.2em;">MEDICO: </span>
+            <span style="font-size: 1.2em;">@(Model.Medicos == null ? "// sin referencia" : Model.Medicos.Nombres)</span>
+        </div>
+        <div>
+            <span style="font-weight: 600; font-size: 1.2em;">FECHA: </span>
+            <span style="font-size: 1.2em;">@Model.FechaRealizacion.ToString("dd/MM/yyyy")</span>
+        </div>
+         <div style="width: 160px;" class="codigo-paciente">
+             <div style="border-style:dashed; ">
+                 <span style="font-weight: 600;">Código Paciente</span>
+             </div>
+              <div class="text-center" style="border-style:dashed;">
+                 <span  style="color: red; font-weight: 600;">@(Model.Paciente == null ? "" : Model.Paciente.Id.ToString())</span>
+             </div>
+        </div>
+    </div> *@
+    <br><br><br><br><br><br>
+    <div class="">
+        <div class="tabla-resultados">
+            @foreach(var detalle in Model.DetalleExamenes)
+            {
+                <div style="text-align: center; font-weight: 600; text-decoration: underline; font-size: 1.3em;">@detalle.ExamenLabClinico.NombreExamen</div>
+                <div class="text-align: center;">
+                    <table class="table table-borderless" style="width: 1500px;">
+                        <thead>
+                            <tr >
+                                <th style="text-align: center;">EXAMEN</th>
+                                <th style="text-align: center;">RESULTADO</th>
+                                <th style="text-align: center;">UNIDADES</th>
+                                <th style="text-align: center;">INTERVALO DE REFERENCIA</th>
+                            </tr>
+                        </thead>
+                        <tbody style="border-top: 3px solid black;">
+                            @foreach(var resultado in detalle.Resultados)
+                            {
+
+                                @if(!string.IsNullOrEmpty(resultado.ValorResultado))
+                                {
+                                    var resultadoTexto = (string.IsNullOrEmpty(resultado.ValorResultado) ? " --- " : resultado.ValorResultado); 
+
+                                    <tr>
+                                        <td style="text-align: center;">@resultado.DatosExamenesLabClinico.Campos</td>
+                                        <td style="text-align: center;">@resultadoTexto</td>
+                                        <td style="text-align: center;"> - - -</td>
+                                        <td style="text-align: center;">@detalle.ExamenLabClinico.DatosExamenesLabClinicos.Where(a => a.Eliminado == false).Select(a => a.ValorReferencia).FirstOrDefault()</td>
+                                    </tr>
+                                }
+                            
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+           
+
+
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+         <div class="" style="width: 380px; position: absolute; right: 0; bottom: 0; margin-right: 0.8em;">
+            <hr class="linea2" style="border-bottom: 1px solid black;">
+            <span class="text-center" style="font-weight: 500; font-size: 1.1em;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nombre de Quimica Biologa que Supervisa</span><br>
+            <span class="text-center" style="font-weight: 500; font-size: 1.1em;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Química Bióloga</span><br>
+            <span class="text-center" style="font-weight: 500; font-size: 1.1em;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Colegiado 0000</span><br>
+            <span class="text-center" style="font-weight: 500; font-size: 1.1em;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Laboratorio CEDIC</span>
+        </div>
+       
+
+</div>
+</div>
+@* <div>
+    <h6 style="font-weight: 700; color: #008f4c;">NUESTRO LABORATORIO PARTICIPA EN EL PROGRAMA DE EVALUACION DE LA CALIDAD DE LA ASOSIACION DE QUIMICOS GRADUADOS DE GUATEMALA</h6>
+</div> *@

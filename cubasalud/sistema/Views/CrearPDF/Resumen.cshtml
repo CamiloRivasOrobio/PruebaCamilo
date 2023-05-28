@@ -1,0 +1,247 @@
+@* @model sistema.Models.facturaVentaViewModel *@
+@* @model Database.Shared.Models.Examen *@
+@model sistema.Models.RealizarExamenLabClinicoViewModel
+
+ @{
+    Layout = "_HojaLayout";
+    string paciente = "";
+    string nit = "";
+    string direccion = "";
+    var todayDate = DateTime.Now;
+    var edad = 0;
+
+   if (Model.Examen.Paciente.FechaNacimiento != null)
+    {
+        edad =  edad = todayDate.Year - Model.Examen.Paciente.FechaNacimiento.Value.Year;
+ 
+    if (todayDate.Month < Model.Examen.Paciente.FechaNacimiento.Value.Month || (todayDate.Month == Model.Examen.Paciente.FechaNacimiento.Value.Month && todayDate.Day < Model.Examen.Paciente.FechaNacimiento.Value.Day)) edad--;
+        
+    }
+}
+
+
+<style>
+.logof{
+    @* text-align: left; *@
+    padding: 18px;
+}
+
+.printDetails > div {
+   display: inline-block;
+}
+
+.text-titulo{
+    position: relative;
+    left: 8.2em;
+}
+
+.text-titulo2{
+    position: relative;
+    left: 13.8em;
+}
+
+hr.linea {
+    border: none;
+    height: 2px;
+    color: #008f4c; 
+    background-color:
+    width: 700px;
+    position: relative;
+    left: 2.5em;
+}
+
+hr.linea2 {
+    border: none;
+    height: 2px;
+    color: #008f4c; 
+    background-color:
+    width: 250px;
+}
+.info-owner{
+    margin-top: 15px;
+    text-align: center;
+    color: #008f4c; /* old IE */
+    position: absolute;
+    left: 55em;
+    top: 0px;
+    width: 200px;
+    
+}
+
+.direccion-info{
+    position: absolute;
+    left: 14.5em;
+    text-align: center;
+    color: #008f4c;
+}
+
+.tabla-resultados{
+    position: relative;
+    left: 5.5em;
+    margin-top: 1em;
+}
+
+.datos-encabezado{
+    margin-top: 1em;
+    margin-bottom: 1em;
+     position: relative;
+     left: 8.5em;
+}
+
+.codigo-paciente{
+    position: relative;
+    left: 25em;
+    top: -5.5em;
+}
+
+</style>
+
+<div class="container-fluid" style="border: 3px solid #795f48; border-radius: 0.8em; min-height: 1500px;">
+    <div class="encabezado">
+        <div class="row printDetails">
+            <div class="col-xs-2">
+                <div class="logof">
+                    <img src="~/assets/images/logo-redowl.jpeg" alt="" width="280">
+                </div>
+            </div>
+            <div class="col-xs-10" >
+                <div class="text-titulo" >
+                    <h1 style="font-weight: 700; color: #008f4c;">Laboratorio Clínico</h1>
+                </div>
+                <div class="text-titulo2">
+                    <h1 style="font-weight: 700; color: #008f4c;">"RED OWL"</h1>
+                </div>
+                <div>
+                    <hr class="linea" style="border-bottom: 1px solid black;">
+                </div>
+                <div class="info-owner">
+                    <h6 style="font-weight: 600;">NOMBRE QUIMICO BIOLOGO</h6>
+                    <h6 style="font-weight: 600;">QUIMICA BIOLOGA</h6>
+                    <h6 style="font-weight: 600;">Col. 0000</h6>
+                </div>
+                <div class="direccion-info">
+                    <h6 style="font-weight: 600; color: #008f4c;"></h6>
+                    <h6 style="font-weight: 600; color: #008f4c;"></h6>
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="infof">
+            @* <div style="width: 410px; float: left;">
+                 <h6>
+                    <span style="font-weight: 600;">PACIENTE:</span> 
+                        @(Model.Paciente == null ? "" : Model.Paciente.Nombre)
+                </h6>
+                 <h6>
+                    <span style="font-weight: 600;">Código paciente:</span> 
+                        @Model.PacienteId
+                </h6>
+                <h6> 
+                    <span style="font-weight: 600;">MEDICO:</span> 
+                        @(Model.Medicos == null ? "// sin referencia" : Model.Medicos.Nombres)
+                </h6>
+            </div> *@
+        </div>
+    </div>
+    <br>
+    <h1 class="text-center informe-resultados" style="font-weight: 700; color: #008f4c;">RESUMEN</h1>
+    <div class="datos-encabezado">
+        <div>
+            <span style="font-weight: 600; font-size: 1.2em;">PACIENTE: </span>
+            <span style="font-size: 1.2em;">@(Model.Examen.Paciente == null ? "" : Model.Examen.Paciente.Nombre)</span>
+        </div>
+         <div>
+            <span style="font-weight: 600; font-size: 1.2em;">NUM. AFIL.: </span>
+            <span style="font-size: 1.2em;">@(string.IsNullOrEmpty(Model.Examen.Paciente.no_IGGS) ? " / sin registro" : Model.Examen.Paciente.no_IGGS)</span>
+        </div>
+        <div>
+            <span style="font-weight: 600; font-size: 1.2em;">EDAD: </span>
+            <span style="font-size: 1.2em;">@edad</span>
+        </div>
+        <div>
+            <span style="font-weight: 600; font-size: 1.2em;">SEXO: </span>
+            <span style="font-size: 1.2em;">@(Model.Examen.Paciente == null ? "" : Model.Examen.Paciente.Sexo.DescripcionSexo)</span>
+        </div>
+         <div>
+            <span style="font-weight: 600; font-size: 1.2em;">MEDICO: </span>
+            <span style="font-size: 1.2em;">@(Model.Examen.Medicos == null ? "// sin referencia" : Model.Examen.Medicos.Nombres)</span>
+        </div>
+        <div>
+            <span  ">FECHA CREACION: </span>
+            <span style="font-size: 1.2em;">@Model.Examen.FechaRealizacion</span>
+        </div>
+        @* <div>
+            <span style="font-weight: 600; font-size: 1.2em;">FECHA: </span>
+            <span style="font-size: 1.2em;">@Model.FechaRealizacion.ToString("dd/MM/yyyy")</span>
+        </div> *@
+         @* <div style="width: 160px;" class="codigo-paciente">
+             <div style="border-style:dashed; ">
+                 <span style="font-weight: 600;">Código Paciente</span>
+             </div>
+              <div class="text-center" style="border-style:dashed;">
+                 <span  style="color: red; font-weight: 600;">@(Model.Examen.Paciente == null ? "" : Model.Examen.Paciente.Id.ToString())</span>
+             </div>
+        </div> *@
+    </div>
+    <div class="detalle" style="padding-bottom: 1em; position: relative; margin-botton: 1.5em; margin-left: 1.5em; margin-right: 1.5em; min-height: 1000px; border-top: 3px solid #456238; border-left: 3px solid #456238;border-bottom: 3px solid #456238; border-right: 3px solid #456238;">
+        <div class="tabla-resultados">
+            
+            @foreach(var detalle in Model.Examen.DetalleExamenes)
+            {
+                <span>
+                    <h4 style="font-size: 1.2em; font-weight: 600;">Examen: @detalle.ExamenLabClinico.NombreExamen </h4>
+                </span>
+            
+                <table class="table table-borderless" style="width: 800px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%; text-align: center;">CAMPOS</th>
+                            <th  style="width: 25%; text-align: center;"> RESULTADOS </th>
+                            <th style="width: 25%; text-align: center;">NOTAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach(var resultado in detalle.Resultados)
+                        {
+                            var resultadoTexto = (string.IsNullOrEmpty(resultado.ValorResultado) ? "" : resultado.ValorResultado); 
+                            
+                            <tr>
+                                <td style="text-align: center;"> @resultado.DatosExamenesLabClinico.Campos</td>
+                                <td style="text-align: center;"> @resultadoTexto</td>
+                                <td></td>
+                            </tr>
+                        }
+                        
+                    </tbody>
+                </table>
+            }
+        </div>
+    
+ @* <div class="" style="width: 250px; position: absolute; right: 0; bottom: 0; margin-right: 0.8em;">
+        <hr class="linea2" style="border-bottom: 1px solid black;">
+        <h6 class="text-center" style="font-weight: 600; font-size: 1.2em;"> RESPONSABLE</h6>
+</div> *@
+       
+
+</div>
+
+
+
+</div>
+<div>
+    <h6 style="font-weight: 700; color: #008f4c;">NUESTRO LABORATORIO PARTICIPA EN EL PROGRAMA DE EVALUACION DE LA CALIDAD DE LA ASOSIACION DE QUIMICOS BIOLOGOS DE GUATEMALA</h6>
+</div>
+
+
+
+ @* @foreach(var item in Model.Examen.DetalleExamenes)
+                        {
+                            <tr>
+                                <td style="text-align: center;">@item.Examen.Id</td>
+                                <td style="text-align: center;">@item.ExamenLabClinico.NombreExamen</td>
+                                <td  style="text-align: center;"></td>
+                                <td></td>
+                            </tr>
+                        } *@

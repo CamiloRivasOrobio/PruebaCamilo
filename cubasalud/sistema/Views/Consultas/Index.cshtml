@@ -1,0 +1,85 @@
+@using Database.Shared.Models
+@model List<Consulta>
+
+@{
+    ViewData["Title"] = "Consultas";
+}
+
+<link rel="stylesheet" href="~/js/DataTables/datatables.css" />
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="text-center">
+            <h4><b>Consultas</b></h4>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="tabla-consultas">
+                        <thead>
+                            <tr>
+                                <th>Fecha y hora de consulta</th>
+                                <th>Paciente</th>
+                                <th>Médico</th>
+                                <th>Especialidad</th>
+                                <th>Servicio</th>
+                                <th>Pago</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                @* var grupo = item.GrupoTProducto == null ? "" : item.GrupoTProducto.NombreGrupoT; *@
+
+                                <tr>
+                                    <td>@item.FechaYHoraInicioConsulta</td>
+                                    <td>@item.Citas.ClienteText</td>
+                                    <td>@item.Citas.EmpleadoText</td>
+                                    <td>@item.Citas.EspecialidadText</td>
+                                    <td>@item.Citas.ServicioText</td>
+                                    <td>@item.EstadoPagoConsulta.Estado</td>
+                                    <td>@item.CostoConsulta</td>
+                                    <td>
+                                        <a asp-action="Informacion" asp-controller="Consultas" asp-route-id="@item.Id"
+                                       class="btn btn-primary" style="width:100px">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <br>
+                                        <br>
+                                        @if (item.EstadoPagoConsultaId == 1 || item.EstadoPagoConsultaId == 3)
+                                        {
+                                            <a asp-action="Delete" asp-controller="Consultas"
+                                                asp-route-id="@item.Id" class="btn btn-danger" style="width:100px">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                            <br />
+                                            <br />
+                                            <a asp-action="GenerarVenta" asp-controller="Consultas" 
+                                                asp-route-id="@item.Id" class="btn btn-primary" style="width:100px">
+                                                Generar venta
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script src="~/ViewModelKo/ConsultasListaVM.js"></script>

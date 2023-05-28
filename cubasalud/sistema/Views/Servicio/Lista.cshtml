@@ -1,0 +1,80 @@
+@using Database.Shared.Paginacion;
+@model List<Database.Shared.Models.Servicio>
+
+@{
+    ViewData["Title"] = "Lista Servicios";
+}
+
+@await Html.PartialAsync("_MensajeExito")
+
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="text-center">
+            <h4><b>Servicios</b></h4>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <a href="/Servicio/Nuevo" class="btn btn-primary">Nuevo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="col-md-6">
+    <a href="@Url.Action("ServiciosPdf","CrearPDF")" class="btn btn-primary">
+    Generar Pdf
+    </a>
+    </div> *@
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tabla-servicios">
+                <thead>
+                    <tr>
+                        <th>Nombre Servicio</th>
+                        <th>Precio</th>
+                        <th>Precio Vip</th>
+                        <th>Precio Social</th>
+                        <th>Precio IGSS</th>
+                        <th>Descripcion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.NombreServicio</td>
+                            <td>@item.Precio</td>
+                            <td>@item.Precio_2</td>
+                            <td>@item.Precio_3</td>
+                            <td>@item.Precio_4</td>
+                            <td>@item.Descripcion</td>
+                            <td>
+                                <a href="@Url.Action("Modificar","Servicio", new {id = @item.Id})" class="btn btn-warning">
+                                    Modificar
+                                </a>
+                                <a href="@Url.Action("Eliminar","Servicio", new {id = @item.Id})" class="btn btn-danger">
+                                    Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script src="~/ViewModelKo/ServiciosListaVM.js"></script>

@@ -1,0 +1,115 @@
+@using System
+@using Database.Shared.Enumeraciones
+@using Database.Shared.Models
+@model List<Paciente>
+
+@{
+    ViewData["Title"] = "Lista pacientes";
+    var todayDate = DateTime.Now;
+}
+
+@await Html.PartialAsync("_MensajeExito")
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="text-center">
+            <h4><b>Pacientes</b></h4>
+        </div>
+    </div>
+</div>
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="form-row">
+            <div class="col-md-12">
+                <a class="btn btn-primary enlace-redirigir" asp-action="Nuevo" asp-controller="Pacientes">
+                    Nuevo paciente
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tabla-pacientes">
+                <thead>
+                    <tr class="text-center">
+                        <th>Código</th>
+                        <th>Paciente</th>
+                        <th>Número de afiliación</th>
+                        <th>Sexo</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Edad</th>
+                        <th>Teléfono</th>
+                        <th>Retomante</th>
+                        <th>Modalidad de atención</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var sexo = item.Sexo == null ? "" : item.Sexo.DescripcionSexo;
+                        var fechaNacimiento = item.FechaNacimiento == null ? "" : Convert.ToDateTime(item.FechaNacimiento).ToShortDateString();
+                        var edad = "";
+                        var retomaServicio = item.TipoPacienteId == (int)TipoPacienteEnum.Retomante ? "Sí" : "No";
+                        var modalidadAtencion = item.ModalidadAtencion == "presencial" ? "Presencial" : "Virtual";
+
+                        if (item.FechaNacimiento != null)
+                        {
+                            edad = (todayDate.Year - item.FechaNacimiento.Value.Year).ToString();
+                            if (todayDate.Month < item.FechaNacimiento.Value.Month
+                            || (todayDate.Month == item.FechaNacimiento.Value.Month && todayDate.Day < item.FechaNacimiento.Value.Day))
+                            {
+
+                                edad = (Convert.ToInt32(edad) - 1).ToString();
+                            }
+                        }
+
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Nombre</td>
+                            <td>@item.no_IGGS</td>
+                            <td>@sexo</td>
+                            <td>@fechaNacimiento</td>
+                            <td>@edad</td>
+                            <td>@item.Celular</td>
+                            <td>@retomaServicio</td>
+                            <td>@modalidadAtencion</td>
+                            <td>
+                                <a href="@Url.Action("Informacion","Pacientes",
+                                new {pacienteId = @item.Id})" class="btn btn-primary enlace-redirigir">Ver</a>
+                                <a href="@Url.Action("Modificar","Pacientes",
+                                new {id = @item.Id})" class="btn btn-primary enlace-redirigir">Modificar</a>
+                                <a href="@Url.Action("PacientesExpedientePDF","CrearPDF",
+                                        new {pacienteId = @item.Id})" class="btn btn-danger enlace-redirigir">Descargar expediente</a>
+                                <a href="@Url.Action("CarneVacunacionJovenes","CrearPDF",
+                                new {idPaciente = @item.Id})" class="btn btn-danger enlace-redirigir">Descargar carné de vacunación</a>
+                                <a href="@Url.Action("CambiarFase","Pacientes",
+                                new {id = @item.Id})" class="btn btn-primary enlace-redirigir">Cambiar fase de tratamiento</a>
+                                @*@if (item.EstadoPacienteId == (int)EstadoPacienteEnum.Activo)
+                                {*@
+                                    <a href="@Url.Action("RegistrarRetiro","Pacientes",
+                                new {pacienteId = @item.Id})" class="btn btn-danger enlace-redirigir">Registrar retiro</a>
+                                @*}*@
+                                @*@if (item.EstadoPacienteId == (int)EstadoPacienteEnum.Activo)*@
+                                @*{*@
+                                <a href="@Url.Action("RetomarServicio","Pacientes",
+                                new {pacienteId = @item.Id})" class="btn btn-primary enlace-redirigir">Retomar servicio</a>
+                                @*}*@
+                                <a href="@Url.Action("Eliminar","Pacientes",
+                                new {id = @item.Id})" class="btn btn-danger enlace-redirigir">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+<script type="text/javascript" src="~/ViewModelKo/PacientesListaVM.js"></script>

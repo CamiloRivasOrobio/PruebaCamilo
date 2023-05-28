@@ -1,0 +1,60 @@
+ @{
+
+Layout = "_HojaLayout";
+
+DateTime fecha = DateTime.Now;
+
+
+}
+@model IEnumerable<Database.Shared.Models.Producto>
+
+                <img width="40"  src="/assets/images/farmamestlogo.png" alt="">
+                       <div class="text-right" style="font-size: 12px;">
+                            <label class=""><strong>Fecha y Hora de Emision: </strong>@fecha</label> &nbsp; &nbsp;
+                            <br/>   
+                        </div>
+               
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre Producto</th>
+                            <th>Codigo Referencia</th>
+                            <th style="width: 20px !important">Grupo</th>
+                            <th>Laboratorio</th>
+                            <th>Stock</th>
+                            <th>Precio Público</th>
+                            <th>Precio Vip</th>
+                            <th>Fecha Vencimiento</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                                var grupo = item.GrupoTProducto == null ? "" : item.GrupoTProducto.NombreGrupoT;
+                                var laboratorio = item.LaboratorioProducto == null ? "" : item.LaboratorioProducto.NombreLaboratorioProducto;
+                                <tr>
+                                    <td class="font-weight-bold">@item.NombreProducto</td>
+                                    <td>@item.CodigoReferencia</td>
+                                    <td >@grupo</td>
+                                    <td>@laboratorio</td>
+                                    <td class="text-primary font-weight-bold">
+                                        <h6>@item.Stock</h6>
+                                    </td>
+                                    <td>
+                                        <span>pub. Q @item.Precio_5</span>
+                                            
+                                            
+                                    </td>
+                                    @* <td>Q @item.PrecioCosto</td> *@
+                                    <td>
+                                        <span>vip. Q @item.Precio_6</span>
+                                    </td>
+                                     <td>
+                                        <span>@item.FechaVencimiento</span>
+                                    </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+         

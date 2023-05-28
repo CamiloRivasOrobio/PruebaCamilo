@@ -1,0 +1,221 @@
+@model sistema.Models.CompraBaseViewModel
+
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <div id="tabs">
+            <ul>
+                <li><a href="#tab-datos-compra">Datos de la compra</a></li>
+                <li><a href="#tab-detalle-compra">Detalle de la compra</a></li>
+            </ul>
+            <div id="tab-datos-compra">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="position-relative form-group">
+                            <label class="">
+                                No.
+                                Comprobante
+                            </label>
+                            @Html.TextBoxFor(a => a.EncabezadoNoComprobante, new
+                            {@class="form-control", @placeholder="No. Comprobante"})
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative form-group">
+                            <label class="">Codigo Del Vendedor</label>
+                            @Html.TextBoxFor(a => a.EncabezadoEmpleadoId, new
+                            {@class="form-control", @placeholder="Código de empleado"})
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>Proveedor</label>
+                        <select class="form-control select2bs4" style="width: 100%;"
+                                asp-for="EncabezadoProveedor" asp-items="@Model.ListaProveedores">
+                        </select>
+                    </div>
+                    @if (@Model.EncabezadoTipoCompraId != 2)
+                    {
+                        <div class="col-md-6">
+                            <label>Tipo</label>
+                            <select class="form-control select2bs4" style="width: 100%;"
+                                asp-for="EncabezadoTipoCompraId" asp-items="@Model.ListaTipoCompra">
+                            </select>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-6">
+                            <label>Tipo</label>
+                            <select class="form-control select2bs4" style="width: 100%;"
+                                asp-for="EncabezadoTipoCompraId" asp-items="@Model.ListaTipoCompra"
+                                disabled="disabled" readonly="readonly">
+                            </select>
+                        </div>
+                    }
+
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="position-relative form-group">
+                            <label class="">Fecha Limite</label>
+                            <input type="text" class="form-control" asp-for="EncabezadoFechaLimite">
+                        </div>
+                    </div>
+                    @* <div class="col-md-6">
+                        <div class="position-relative form-group"><label class="">Fecha Recepcion</label>
+                        @Html.TextBoxFor(a => a.Compra.FechaRecepcion, new
+                        {type="date", @class="form-control",@id="fecharecepcion",
+                        @placeholder="Direccion"})
+                        @Html.ValidationMessageFor(a => a.Compra.FechaRecepcion, "", new { @class =
+                        "text-danger"})
+                        </div>
+                        </div> *@
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="position-relative form-group">
+                            <label class="">Observación</label>
+                            @Html.TextAreaFor(a => a.EncabezadoObservacion,5,500 ,htmlAttributes : new {
+                            @class="form-control ", @placeholder="Observación",
+                            @style="max-width:100% !important;"})
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-detalle-compra">
+                @if (Model.EstadoCompra == false &&
+                ((Model.CompraId != null && Model.EncabezadoTipoCompraId == 1)
+                || Model.CompraId == null))
+                {
+                    <div class="form-row">
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <input type="submit" value="Agregar" class="btn btn-success" data-bind="click:agregarProductoCompra">
+                                </div>
+                                <select class="form-control select2bs4" style="width:80%" data-bind="options:productosRegistrados,
+                                                                            value: productoRegistradoSeleccionado,
+                                                                          optionsText:'NombreProducto'">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="position-relative form-group">
+                                <select class="form-control select2bs4" style="width: 100%;" data-bind="options:laboratorios,
+                                                                            value: laboratorioSeleccionado,
+                                                                          optionsText:'NombreLaboratorioProducto'">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="table-responsive">
+                    <table class='table table-hover' id="tablecompra">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Producto</th>
+                                <th>Unidad de compra</th>
+                                <th>Cantidad</th>
+                                <th>Precio de compra</th>
+                                <th>Total</th>
+                                <th style="background-color:lightgray">Precio de venta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko foreach: productosComprados-->
+                            <tr>
+                                <td data-bind="text:ProductoId"></td>
+                                <td data-bind="text:NombreProducto"></td>
+                                <td>
+                                    <select class="form-control unidad-compra-producto" data-bind="attr:{id:'unidad-compra-item-'+Item}"></select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" data-bind="value:Cantidad,event:{change:$root.calcularPrecios}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" data-bind="value:PrecioCompra,event:{change:$root.calcularPrecios}" />
+                                </td>
+                                <td data-bind="text:Total"></td>
+                                <td style="background-color:lightgray" data-bind="attr:{id:'unidades-venta-item-'+Item}"></td>
+                                <td>
+                                    <button class="btn btn-danger">Quitar</button>
+                                </td>
+                            </tr>
+                            <!--/ko-->
+                            @*@if (Model.Compra != null)
+                                {
+                                foreach (var item in Model.Compra.DetalleCompras)
+                                {
+                                <tr>
+                                <td class="idProd">@item.Id</td>
+                                <td>@item.Producto.NombreProducto</td>
+                                <td><input type="number" step="any" value="@item.Cantidad" class="form-control" onchange="editarValorFila(this)"></td>
+                                <td class="cantidad-fila"><input type="number" step="any" value="@item.Cantidad" class="form-control" onchange="editarValorFila(this)"></td>
+                                <td class="precio-fila"><input type="number" step="any" value="@item.Precio" class="form-control" onchange="actualizarPreciosVenta()"></td>
+                                <td class="total-t">@item.PrecioTotal</td>
+                                <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarFila(this,@item.Precio)">Quitar</button></td>
+                                <td style="display: none;">@item.Producto.Id</td>
+                                </tr>
+                                }
+                                }*@
+
+                        </tbody>
+
+                    </table>
+                    <!--ko foreach: productosComprados-->
+                    <input type="hidden" data-bind="value:ProductoId,attr:{id:'producto-id-item-'+Item}" />
+                    <!--/ko-->
+                </div>
+
+                <br />
+
+                <div class="text-right" style="font-size: 25px;">
+                    <span>Total:</span>
+                    Q <span data-bind="text:totalCompra"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="col-md-12">
+        <div class="tab-content">
+
+            <div class="tab-pane tabs-animation fade show " id="tab-content-3" role="tabpanel">
+                <br />
+                <form asp-action="Nuevo" method="get">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input value="Buscar" class="btn btn-success" onclick="FiltrarProductos(document.getElementById('buscarfiltro').value)"></input>
+                            </div>
+                            <input type="text" name="buscar" id="buscarfiltro" class="form-control"
+                                   placeholder="Buscar Producto...">
+                        </div>
+                    </div>
+                </form>
+                <br />
+
+                <div class="main-card mb-6 card">
+                    <div class="container-fluid">
+                        <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                            <div class="card-deck-wrapper">
+                                <div class="card-deck">
+                                    <div class="row" id="listafiltro">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
